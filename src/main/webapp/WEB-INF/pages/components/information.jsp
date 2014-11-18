@@ -4,6 +4,6 @@
     <ul>
     <li>Tài khoản: ${username} </li>
     <li><a href="#">Đổi mật khẩu</a></li>
-    <li><a href="/user/logout.html">Đăng xuất</a></li>
+    <li><a href="${pageContext.request.contextPath}/user/logout.html">Đăng xuất</a></li>
     </ul>
     </div>
