@@ -164,4 +164,12 @@ public class StudentController {
          request.setAttribute("id", "change");
         return SVManager(request);
     }
+    
+    @RequestMapping(value = "/find", method = RequestMethod.GET)
+    public String find(HttpServletRequest request){
+    	String mssv = request.getParameter("mssv");
+    	request.setAttribute("id", "list");
+    	request.setAttribute("studentlist", new Student().getStudentList(mssv));
+    	return SVManager(request);
+    }
 }

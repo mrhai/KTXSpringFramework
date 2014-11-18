@@ -15,7 +15,7 @@
         <jsp:include page="components/banner.jsp" />
         <div id="center">
             <div id="title">Đăng nhập</div>
-            <form name="login" onsubmit="return checkField()" action="user/xulidangnhap.html" method="post" >
+            <form name="login" onsubmit="return checkField()" action="${pageContext.request.contextPath}/user/xulidangnhap.html" method="post" >
                 <table width="1000">
                     <tr>
                         <td width="448" align="right"> Quyền</td>

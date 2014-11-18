@@ -26,7 +26,7 @@
           <tr>
               <td><input type="radio" id="addemployee" name="employee" onclick="employeecase()">Thêm nhân viên</input></td>
             <td><input type="radio" id="deleteemployee" name="employee" onclick="employeecase()">Xóa nhân viên</input></td>
-            <td><input type="radio" id="changesalary" name="employee" onclick="employeecase()">Thay đổi lương</input></td>
+            <td><input type="radio" id="changesalary" name="employee" onclick="employeecase()">Lương</input></td>
           </tr>
           </table>
               <form name="add" action="add.html" method="post">

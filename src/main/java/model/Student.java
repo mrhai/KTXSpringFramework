@@ -99,6 +99,33 @@ public class Student {
         return leg;
     }
     
+    public ArrayList<Student> getStudentList(String masv){
+    	String command;
+    	if(masv.equals("")){
+    		command = "select * from sinhvien";
+    	}else{
+    		command = "select * from sinhvien where masv = "+masv;
+    		System.out.println(command);
+    	}
+    	ArrayList<Student> list = new ArrayList<Student>();
+    	
+    	try {
+    		Student student;
+			ResultSet rs = db.execute(command);
+			while (rs.next()) {
+				student = new Student();
+				student.setMssv(rs.getInt("masv"));
+				student.setTensv(rs.getString("tensv"));
+				list.add(student);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return list;
+    }
+    
     public int getMssv() {
         return mssv;
     }
