@@ -30,3 +30,6 @@ function load(){
     employeecase();
 }
 
+function select(){
+	document.forms["delete"]["mnv"].value = document.forms["delete"]["smnv"].value;
+}

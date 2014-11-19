@@ -94,13 +94,16 @@ public class Employee {
         return mnv;
     }
     
-    public ArrayList<String> getMNV(){
-        ArrayList<String> list = new ArrayList<String>();
-        String command = "select manhanvien from nhanvien where manhanvien > 123";
+    public ArrayList<Employee> getMNV(){
+        ArrayList<Employee> list = new ArrayList<Employee>();
+        String command = "select * from nhanvien where manhanvien > 123";
          try {
             ResultSet rs = db.execute(command);
             while(rs.next()){
-                list.add(rs.getString("manhanvien"));
+            	Employee employee = new Employee();
+            	employee.setManv(rs.getInt("manhanvien"));
+            	employee.setTennv(rs.getString("tennhanvien"));
+                list.add(employee);
             }
         } catch (Exception e) {
         }

@@ -24,7 +24,7 @@
           <div id="content">
           <table>
           <tr>
-              <td><input type="radio" id="addemployee" name="employee" onclick="employeecase()">Thêm nhân viên</input></td>
+              <td><input type="radio" id="addemployee" name="employee" onclick="employeecase()">Nhận nhân viên</input></td>
             <td><input type="radio" id="deleteemployee" name="employee" onclick="employeecase()">Xóa nhân viên</input></td>
             <td><input type="radio" id="changesalary" name="employee" onclick="employeecase()">Lương</input></td>
           </tr>
@@ -33,7 +33,7 @@
                   <input id="mvcSrc" name="mnvSrc" type="hidden" value="${manv}"/>
                   <table id="addemptb" width="100%" hidden="true">
               <tr>
-                <td colspan="2" align="center" bgcolor="#0099FF" class="titletable">Thêm nhân viên</td>
+                <td colspan="2" align="center" bgcolor="#0099FF" class="titletable">Thông tin nhân viên</td>
               </tr>
               <tr>
                   <td width="51%" align="right">Mã nhân viên</td>
@@ -69,18 +69,26 @@
               </tr>
             </table>
           </form>
-          <form action="delete.html" method="post">
+          <form name="delete" action="delete.html" method="post" onsubmit="return confirm('Bạn có chắc không?')">
               <table id="deleteemptb" width="100%" hidden="true">
               <tr>
                 <td colspan="2" align="center" bgcolor="#0099FF" class="titletable">Xóa nhân viên</td>
               </tr>
               <tr>
-                <td width="51%" align="right">Chọn nhân viên</td>
+                <td width="51%" align="right">Mã nhân viên</td>
+                <td width="49%">
+                   <input type="text" name="mnv"/>
+                </td>
+              </tr>
+              
+              <tr>
+                <td width="51%" align="right">Chọn nhanh</td>
                 <td width="49%">
                     
-                    <select name="mnv">
+                    <select name="smnv" onchange="select()">
+                     <option value="">---</option>
                         <c:forEach var="mnv" items="${mnv}">
-                            <option value="${mnv}">${mnv}</option>
+                            <option value="${mnv.manv}">${mnv.manv} - ${mnv.tennv}</option>
                         </c:forEach>
                     </select>
                 </td>

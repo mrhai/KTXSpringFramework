@@ -107,13 +107,17 @@ public class Guest {
         return leg;
     }
 
-    public ArrayList<String> getListKhach() {
-        ArrayList<String> list = new ArrayList<String>();
-        String command = "select makhach from khach";
+    public ArrayList<Guest> getListKhach() {
+        ArrayList<Guest> list = new ArrayList<Guest>();
+        String command = "select * from khach";
         try {
             ResultSet rs = db.execute(command);
+            Guest guest;
             while (rs.next()) {
-                list.add(rs.getString("makhach"));
+            	guest = new Guest();
+            	guest.setMaso(rs.getInt("makhach"));
+            	guest.setTenkhach(rs.getString("tenkhach"));
+                list.add(guest);
             }
         } catch (Exception e) {
         }

@@ -32,10 +32,17 @@ function load(){
 
 function SV(){
     document.forms["view"]["mssv"].value = document.forms["view"]["mssvview"].value;
+    document.forms["addguesttb"]["mssv"].value = document.forms["addguesttb"]["selectmssv"].value;
+    document.forms["delete"]["makhach"].value = document.forms["delete"]["smakhach"].value;
+    
    var type = document.getElementById("type").value;
    if(type === "only"){
        document.getElementById("makhach").disabled= false;
+       document.getElementById("smakhach").disabled= false;
    }else{
         document.getElementById("makhach").disabled= true;
+        document.getElementById("smakhach").disabled= true;
    }
+   
+   
 }

@@ -56,10 +56,17 @@
                             <td align="right">Ngày đi</td>
                             <td><input type="text" name="ngaydi" /></td>
                         </tr>
-                        <tr>
-                            <td align="right">Khách của SV</td>
+                         <tr>
+                            <td align="right">MSSV xác nhận</td>
                             <td>
-                                <select id="mssv" name="mssv">
+                               <input type="text" name="mssv"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">Chọn nhanh</td>
+                            <td>
+                                <select id="selectmssv" name="selectmssv" onchange="SV()">
+                                <option value="">---</option>
                                     <c:forEach var="sv" items="${mssv}">
                                         <option value="${sv}">${sv}</option>
                                     </c:forEach>
@@ -67,6 +74,9 @@
 
                             </td>
                         </tr>
+                        
+                        
+                        
                         <tr>
                             <td colspan="2" align="center"><input type="submit" value="Thêm"/></td>
                         </tr>
@@ -78,6 +88,7 @@
                         <tr>
                             <td colspan="2" align="center" bgcolor="#0099FF" class="titletable">Danh sách khách</td>
                         </tr>
+
                         <tr>
                             <td width="50%" align="right">Chọn SV</td>
                             <td width="50%">
@@ -98,7 +109,7 @@
                         </tr>
                     </table>
                 </form>
-                <form action="delete.html", method="post">
+                <form name="delete" action="delete.html", method="post" onsubmit="return confirm('Bạn có muốn xóa người này?')">
                     <table id="deleteguesttb" width="100%" hidden="true">
                         <tr>
                             <td colspan="2" align="center" bgcolor="#0099FF" class="titletable">Xóa khách</td>
@@ -108,16 +119,27 @@
                             <td align="right">Xóa theo</td>
                             <td>
                                 <select id="type" name="type" onchange="SV()">
+                                	<option value="leave" selected="true">---</option>
                                     <option value="leave">Khách đã đi</option>
                                     <option value="only">Từng khách một</option>
                                 </select>
                             </td>
                         </tr>
-                        <td width="50%" align="right">Chọn khách</td>
+                        
+                          <tr>
+                        <td width="50%" align="right">Mã khách</td>
                         <td width="50%">
-                            <select name="makhach" id="makhach" disabled="true" >
+                            <input type="text" name="makhach" id="makhach" disabled="true"/>
+                        </td>
+                        </tr>
+                        
+                        <tr>
+                        <td width="50%" align="right" >Chọn khách</td>
+                        <td width="50%">
+                            <select name="smakhach" id="smakhach" disabled="true" onchange="SV()" >
+                             <option value="">---</option>
                                 <c:forEach var="guest" items="${listGuest}">
-                                    <option value="${guest}">${guest}</option>
+                                    <option value="${guest.maso}">${guest.maso} - ${guest.tenkhach}</option>
                                 </c:forEach>
                             </select>
                         </td>
