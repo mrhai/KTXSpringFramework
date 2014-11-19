@@ -47,48 +47,6 @@ public class StudentController {
 
     }
 
-    @RequestMapping(value = "/roommanager", method = RequestMethod.GET)
-    public String roomManager(HttpServletRequest request) {
-        User user = new GeneralUser();
-        if (user.checkSession(request.getSession())) {
-            request.setAttribute("roomnum", new Room().roomList());
-            request.setAttribute("roomregion", new RoomRegion().regionList());
-            return "quanlyphong";
-        } else {
-            request.setAttribute("message", "Vui lòng đăng nhập!");
-            return "dangnhap";
-        }
-
-    }
-
-    @RequestMapping(value = "/guestmanager", method = RequestMethod.GET)
-    public String guestManager(HttpServletRequest request) {
-        User user = new GeneralUser();
-        if (user.checkSession(request.getSession())) {
-            request.setAttribute("roomnum", new Room().roomList());
-            request.setAttribute("roomregion", new RoomRegion().regionList());
-            return "quanlykhach";
-        } else {
-            request.setAttribute("message", "Vui lòng đăng nhập!");
-            return "dangnhap";
-        }
-
-    }
-
-    @RequestMapping(value = "/accountingmanager", method = RequestMethod.GET)
-    public String accountingManager(HttpServletRequest request) {
-        User user = new GeneralUser();
-        if (user.checkSession(request.getSession())) {
-            request.setAttribute("roomnum", new Room().roomList());
-            request.setAttribute("roomregion", new RoomRegion().regionList());
-            return "ketoan";
-        } else {
-            request.setAttribute("message", "Vui lòng đăng nhập!");
-            return "dangnhap";
-        }
-
-    }
-
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addorchange(HttpServletRequest request) {
 
@@ -172,4 +130,13 @@ public class StudentController {
     	request.setAttribute("studentlist", new Student().getStudentList(mssv));
     	return SVManager(request);
     }
+    
+    @RequestMapping(value = "/view", method = RequestMethod.GET)
+    public String view(HttpServletRequest request){
+    	String mssv = request.getParameter("mssv");
+    	request.setAttribute("student", new Student().getStudentList(mssv));
+    	return "view";
+    }
+    
+    
 }

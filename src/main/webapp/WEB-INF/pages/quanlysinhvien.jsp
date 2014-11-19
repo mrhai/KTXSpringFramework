@@ -203,7 +203,7 @@
 
 			<td width="40%" align="center">${student.mssv }</td>
 			<td width="30%" align="center">${student.tensv }</td>
-			<td width="30%" align="center"><a href="#">Thông tin</a></td>
+			<td width="30%" align="center"><a href="view.html?mssv=${student.mssv}">Thông tin</a></td>
 			</tr>
 			</c:forEach>
 			</table>

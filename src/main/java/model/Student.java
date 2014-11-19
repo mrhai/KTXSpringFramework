@@ -116,6 +116,11 @@ public class Student {
 				student = new Student();
 				student.setMssv(rs.getInt("masv"));
 				student.setTensv(rs.getString("tensv"));
+				student.setNgaysinh(rs.getString("ngaysinh"));
+				student.setQuequan(rs.getString("quequan"));
+				student.setLop(rs.getString("lop"));
+				student.setKhoa(rs.getString("khoa"));
+				student.setSdt(rs.getInt("sdt"));
 				list.add(student);
 			}
 		} catch (SQLException e) {
