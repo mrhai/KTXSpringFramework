@@ -20,6 +20,8 @@
 <th class="titletable">Lớp</th>
 <th class="titletable">Khoa</th>
 <th class="titletable">Số điện thoại</th>
+<th class="titletable">Ngày ở</th>
+<th class="titletable">Ngày đi</th>
 </tr>
 <tr>
 <c:forEach var="st" items="${student }">
@@ -30,6 +32,8 @@
 <td align="center">${st.lop }</td>
 <td align="center">${st.khoa }</td>
 <td align="center">${st.sdt }</td>
+<td align="center">${st.ngayo }</td>
+<td align="center">${st.ngaydi }</td>
 </c:forEach>
 </tr>
 </table>

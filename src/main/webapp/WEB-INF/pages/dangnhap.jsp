@@ -16,25 +16,15 @@
         <div id="center">
             <div id="title">Đăng nhập</div>
             <form name="login" onsubmit="return checkField()" action="${pageContext.request.contextPath}/user/xulidangnhap.html" method="post" >
-                <table width="1000">
+                <table width="100%">
+                    
                     <tr>
-                        <td width="448" align="right"> Quyền</td>
-                        <td width="155">
-                            <select name = "rights">
-                                <option value="admin">Admin</option>
-                                <option value="sv">Sinh viên</option>
-                                <option value="nv">Nhan viên</option>
-                            </select>
-                        </td>
-                        <td width="381">&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <td align="right">Tên đăng nhập</td>
+                        <td  width="45%" align="right">Tên đăng nhập</td>
                         <td><input type="text" name="username" /></td>
                         <td><label id="lblUsername"></label></td>
                     </tr>
                     <tr>
-                        <td align="right">Mật khẩu</td>
+                        <td  width="45%" align="right">Mật khẩu</td>
                         <td><input type="password" name="password" /></td>
                         <td><label id="lblPassword"></label></td>
                     </tr>

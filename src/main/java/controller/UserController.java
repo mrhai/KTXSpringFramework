@@ -30,60 +30,99 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping(value = "/user")
 public class UserController {
 
-    private User user;
+	private User user;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(ModelMap mm, HttpServletRequest request) {
-        user = new GeneralUser();
-        if(user.checkSession(request.getSession())){
-            return "adminpage";
-         } else {
-            return "dangnhap";
-        }
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(ModelMap mm, HttpServletRequest request) {
+		user = new GeneralUser();
+		if (user.checkSession(request.getSession())) {
+			return "adminpage";
+		} else {
+			return "dangnhap";
+		}
 
-    }
+	}
 
-    @RequestMapping(value = "/xulidangnhap", method = RequestMethod.POST)
-    public String welcome(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        HttpSession session = request.getSession();
-            int username = Integer.parseInt(request.getParameter("username"));
-            String password = request.getParameter("password");
-            String groub = request.getParameter("rights");
-            if (groub.equals("admin")) {
-                Employee employee = new Employee();
-                employee.setManv(username);
-                user = new AdminUser(employee, password);
-            } else if (groub.equals("sv")) {
-                Student student = new Student();
-                student.setMssv(username);
-                user = new StudentUser(student, password);
-            } else {
-                Employee employee = new Employee();
-                employee.setManv(username);
-                user = new EmployeeUser(employee, password);
-            }
+	@RequestMapping(value = "/xulidangnhap", method = RequestMethod.POST)
+	public String welcome(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ServletException {
+		HttpSession session = request.getSession();
+		int username = Integer.parseInt(request.getParameter("username"));
+		String password = request.getParameter("password");
 
-            if (user.login() != 0) {
-                session.setAttribute("username", username);
-                session.setAttribute("actor", groub);
-                if (groub.equals("admin")) {
-                    return "adminpage";
-                } else if (groub.equals("sv")) {
-                    return "";
-                } else {
-                    return "";
-                }
-            } else {
-                request.setAttribute("message", "Đăng nhập thất bại, vui lòng kiểm tra lại thông tin đăng nhập!");
-                return "dangnhap";
-            }
-       
-    }
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpSession session) {
-        user = new GeneralUser();
-        user.logout(session);
-        return "dangnhap";
-    }
+		Employee employee = new Employee();
+		employee.setManv(username);
+		user = new AdminUser(employee, password);
+		//admin
+		if (user.login() != 0) {
+			 session.setAttribute("username", username);
+			 session.setAttribute("actor", "admin");
+			 return "adminpage";
+		} else {
+			//student
+			Student student = new Student();
+			student.setMssv(username);
+			user = new StudentUser(student, password);
+			if (user.login() != 0) {
+				 session.setAttribute("username", username);
+				 session.setAttribute("actor", "sv");
+				 return "sinhvien";//tam thoi
+			} else {
+				//nvs
+				employee = new Employee();
+				employee.setManv(username);
+				user = new EmployeeUser(employee, password);
+				if (user.login() != 0) {
+					session.setAttribute("username", username);
+					 session.setAttribute("actor", "nv");
+					 return "nhanvien";//tam thoi
+				} else {
+					 request.setAttribute("message",
+								 "Đăng nhập thất bại, vui lòng kiểm tra lại thông tin đăng nhập!");
+								 return "dangnhap";
+				}
+			}
+		}
+
+
+		// String groub = request.getParameter("rights");
+		// if (groub.equals("admin")) {
+		// Employee employee = new Employee();
+		// employee.setManv(username);
+		// user = new AdminUser(employee, password);
+		// } else if (groub.equals("sv")) {
+		// Student student = new Student();
+		// student.setMssv(username);
+		// user = new StudentUser(student, password);
+		// } else {
+		// Employee employee = new Employee();
+		// employee.setManv(username);
+		// user = new EmployeeUser(employee, password);
+		// }
+		//
+		// if (user.login() != 0) {
+		// session.setAttribute("username", username);
+		// session.setAttribute("actor", groub);
+		// if (groub.equals("admin")) {
+		// return "adminpage";
+		// } else if (groub.equals("sv")) {
+		// return "";
+		// } else {
+		// return "";
+		// }
+		// } else {
+		// request.setAttribute("message",
+		// "Đăng nhập thất bại, vui lòng kiểm tra lại thông tin đăng nhập!");
+		// return "dangnhap";
+		// }
+
+	}
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		user = new GeneralUser();
+		user.logout(session);
+		return "dangnhap";
+	}
 
 }

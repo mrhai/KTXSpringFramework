@@ -5,18 +5,26 @@
  */
 package controller;
 
+import java.io.File;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.servlet.http.HttpServletRequest;
+
 import model.GeneralUser;
 import model.Room;
 import model.RoomRegion;
 import model.Student;
 import model.User;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
@@ -25,7 +33,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value = "/student")
 public class StudentController {
+	
+	 private final String UPLOAD_DIRECTORY = "C:/uploads";
 
+	
     @RequestMapping(value = "/svmanager", method = RequestMethod.GET)
     public String SVManager(HttpServletRequest request) {
         User user = new GeneralUser();
@@ -34,6 +45,7 @@ public class StudentController {
             request.setAttribute("roomnum", new Room().roomList());
             request.setAttribute("roomregion", new RoomRegion().regionList());
             request.setAttribute("mssv", new Student().getMSSV());
+            request.setAttribute("bill", new Student().getNoList());
             return "quanlysinhvien";
             }else{
                  request.setAttribute("message", "Bạn không có quyền truy cập vào mục vừa rồi!");
@@ -49,10 +61,10 @@ public class StudentController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addorchange(HttpServletRequest request) {
-
         int mssv = Integer.parseInt(request.getParameter("mssv"));
         String tensv = request.getParameter("tensv");
         String ngaysinh = request.getParameter("ngaysinh");
+        String ngaydi = request.getParameter("ngaydi");
         String que = request.getParameter("que");
         String lop = request.getParameter("lop");
         String khoa = request.getParameter("khoa");
@@ -62,12 +74,35 @@ public class StudentController {
         RoomRegion region = new RoomRegion(makhu, "");
         Room room = new Room(maphong, region, 0, 0, null, null);
         if (room.checkRoom()) {
-            Student student = new Student(mssv, tensv, ngaysinh, que, lop, khoa, room, sdt);
+            Student student = new Student(mssv, tensv, ngaysinh, que, lop, khoa, room, sdt,ngaydi);
             request.setAttribute("roomnum", new Room().roomList());
             request.setAttribute("roomregion", new RoomRegion().regionList());
             try {
                 if (student.add() >= 3) {
-                    
+//                	// upfile
+//                	if(ServletFileUpload.isMultipartContent(request)){
+//                        try {
+//                            List<FileItem> multiparts = new ServletFileUpload(
+//                                                     new DiskFileItemFactory()).parseRequest(request);
+//                          
+//                            for(FileItem item : multiparts){
+//                                if(!item.isFormField()){
+//                                    String name = new File(item.getName()).getName();
+//                                    item.write( new File(UPLOAD_DIRECTORY + File.separator + name));
+//                                }
+//                            }
+//                       
+//                           //File uploaded successfully
+//                           request.setAttribute("message", "File Uploaded Successfully");
+//                        } catch (Exception ex) {
+//                           request.setAttribute("message", "File Upload Failed due to " + ex);
+//                        }          
+//                     
+//                    }else{
+//                        request.setAttribute("message",
+//                                             "Sorry this Servlet only handles file upload request");
+//                    }
+//                	//het up
                     request.setAttribute("message", "Thêm thành công!");
                 } else {
                     request.setAttribute("message", "Không thêm được, Sinh viên này đã tồn tại!");
@@ -111,10 +146,14 @@ public class StudentController {
             Student student = new Student();
             student.setRoom(room);
             student.setMssv(mssv);
+            if(student.checkBill() ==0){
             if (student.changeRoom() != 0) {
                 request.setAttribute("message", "Thay đổi thành công!");
             } else {
                 request.setAttribute("message", "Sinh viên hiện đang ở phòng này!");
+            }
+            }else{
+            	 request.setAttribute("message", "Sinh viên này hiện đang nợ tiền phòng, không thể đổi phòng lúc này!");
             }
         } else {
             request.setAttribute("message", "Phòng này hiện đã đầy!");

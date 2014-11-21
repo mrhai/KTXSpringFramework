@@ -33,9 +33,15 @@
 						sinh viên</td>
 					<td align="center"><input type="radio" id="change"
 						name="addorchange" onclick="addorchangeAction()" />Đổi phòng</td>
-						
-						<td align="center"><input type="radio" id="studenlist"
-						name="addorchange" onclick="addorchangeAction()" />Danh sách sinh viên</td>
+
+					<td align="center"><input type="radio" id="studenlist"
+						name="addorchange" onclick="addorchangeAction()" />Hồ sơ lưu trú
+						viên</td>
+					<td align="center"><input type="radio" id="arrears"
+						name="addorchange" onclick="addorchangeAction()" />Nợ hóa đơn</td>
+					<td align="center"><input type="radio" id="studenlist"
+						name="addorchange" onclick="addorchangeAction()" />Khen thưởng/
+						Kỉ luật</td>
 				</tr>
 			</table>
 			<form action="add.html" method="post">
@@ -91,6 +97,10 @@
 						<td><input type="text" name="sdt" /></td>
 					</tr>
 
+					<tr>
+						<td align="right">Ngày đi</td>
+						<td><input type="text" name="ngaydi" /></td>
+					</tr>
 					<tr>
 						<td colspan="2" align="center"><input type="submit"
 							value="Ghi thông tin" /></td>
@@ -175,39 +185,77 @@
 					</tr>
 				</table>
 			</form>
-			
-			<table width = "100%" id="list" hidden="true"> 
-			<form action="find.html" method="get">
 
-			<tr>
-			<td colspan="3" class="titletable" align="center">Tìm kiếm</td>
-			</tr>
-			<tr>
-			<td align="right" width="45%">Mã sinh viên</td>
-			<td><input type="text" name = "mssv"></input></td>
-			<td></td>
-			</tr>
-			<tr>
-			<td colspan="3" align="center"><input type = "submit" value="Tìm"></input></td>
-			</tr>
-			
-			</form>
-			<tr class="titletable">
-			<td width="40%" align="center"  class="titletable">Mã sinh viên</td>
-			<td width="30%" align="center"  class="titletable">Tên sinh viên</td>
-			<td width="30%" align="center"  class="titletable"></td>
-			</tr>
-			
-			<c:forEach var="student" items="${studentlist }">
-			<tr>
+			<table width="100%" id="list" hidden="true">
+				<form action="find.html" method="get">
 
-			<td width="40%" align="center">${student.mssv }</td>
-			<td width="30%" align="center">${student.tensv }</td>
-			<td width="30%" align="center"><a href="view.html?mssv=${student.mssv}">Thông tin</a></td>
-			</tr>
-			</c:forEach>
+					<tr>
+						<td colspan="3" class="titletable" align="center">Tìm kiếm</td>
+					</tr>
+					<tr>
+						<td align="right" width="45%">Mã sinh viên</td>
+						<td><input type="text" name="mssv"></input></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td colspan="3" align="center"><input type="submit"
+							value="Tìm"></input></td>
+					</tr>
+
+				</form>
+
+				<tr class="titletable">
+					<td width="40%" align="center" class="titletable">Mã sinh viên</td>
+					<td width="30%" align="center" class="titletable">Tên sinh
+						viên</td>
+					<td width="30%" align="center" class="titletable"></td>
+				</tr>
+
+				<c:forEach var="student" items="${studentlist }">
+
+					<c:choose>
+						<c:when test="${student.leave > 0}">
+
+							<tr>
+
+								<td width="40%" align="center"><font color="red">${student.mssv }</font></td>
+								<td width="30%" align="center">${student.tensv }</td>
+								<td width="30%" align="center"><a
+									href="view.html?mssv=${student.mssv}">Thông tin</a></td>
+							</tr>
+						</c:when>
+						<c:when test="${student.leave == 0}">
+							<tr>
+
+								<td width="40%" align="center">${student.mssv }</td>
+								<td width="30%" align="center">${student.tensv }</td>
+								<td width="30%" align="center"><a
+									href="view.html?mssv=${student.mssv}">Thông tin</a></td>
+							</tr>
+						</c:when>
+					</c:choose>
+
+				</c:forEach>
 			</table>
-			
+			<table id="bill" width = "100%" hidden="true">
+				<tr>
+					<td class="titletable" align="center">Mã sinh viên</td>
+					<td class="titletable" align="center">Mã phòng</td>
+					<td class="titletable" align="center">Mã khu</td>
+					<td class="titletable" align="center">Tiền còn thiếu (VND)</td>
+				</tr>
+				
+					<c:forEach var="student" items="${bill }">
+					<tr>
+					<td align="center">${ student.mssv}</td>
+					<td align="center">${ student.room.maphong}</td>
+					<td align="center">${ student.room.roomRegion.makhu}</td>
+					<td align="center">${ student.tienthieu}</td>
+					</tr>
+					</c:forEach>
+				
+			</table>
+
 			<center>
 				<font color="red">${message}</font>
 			</center>
