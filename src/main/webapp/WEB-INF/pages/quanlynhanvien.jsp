@@ -32,6 +32,10 @@
 						onclick="employeecase()">Xóa nhân viên</input></td>
 					<td><input type="radio" id="changesalary" name="employee"
 						onclick="employeecase()">Lương</input></td>
+					<td><input type="radio" id="employee" name="employee"
+						onclick="employeecase()">Cán bộ quản lý phòng</input></td>
+					<td><input type="radio" id="employeelist" name="employee"
+						onclick="employeecase()">DS nhân viên quản lý</input></td>
 				</tr>
 			</table>
 			<form name="add" action="add.html" method="post">
@@ -89,7 +93,7 @@
 						<td width="49%"><select name="smnv" onchange="select()">
 								<option value="">---</option>
 								<c:forEach var="mnv" items="${mnv}">
-									<option value="${mnv.manv}">${mnv.manv}- ${mnv.tennv}</option>
+									<option value="${mnv.manv}">${mnv.manv}-${mnv.tennv}</option>
 								</c:forEach>
 						</select></td>
 					</tr>
@@ -108,9 +112,9 @@
 					<tr>
 						<td width="51%" align="right">Chọn nhân viên</td>
 						<td width="49%"><select name="mnv">
+								<option value="">---</option>
 								<c:forEach var="mnv" items="${mnv}">
-									<option value="">---</option>
-									<option value="${mnv.manv}">${mnv.manv}- ${mnv.tennv}</option>
+									<option value="${mnv.manv}">${mnv.manv}-${mnv.tennv}</option>
 								</c:forEach>
 						</select></td>
 					</tr>
@@ -124,6 +128,60 @@
 					</tr>
 				</table>
 			</form>
+			<form action="room.html" method="get">
+				<table id="room" width="100%" hidden="true">
+					<tr>
+						<td colspan="2" align="center" bgcolor="#0099FF"
+							class="titletable">Cán bộ quản lý phòng</td>
+					</tr>
+
+					<tr>
+						<td width="50%" align="right">Mã phòng</td>
+						<td width="50%"><select name="roomnum">
+								<c:forEach var="list" items="${roomnum}">
+									<option value="${list}">${list}</option>
+								</c:forEach>
+						</select></td>
+					</tr>
+					<tr>
+						<td width="50%" align="right">Mã khu</td>
+						<td width="50%"><select name="roomregion">
+								<c:forEach var="list" items="${roomregion}">
+									<option value="${list.makhu}">${list.tenkhu}</option>
+								</c:forEach>
+						</select></td>
+					</tr>
+					<tr>
+						<td width="50%" align="right">Nhân viên</td>
+						<td width="50%"><select name="mnv">
+								<option value="">---</option>
+								<c:forEach var="mnv" items="${mnv}">
+									<option value="${mnv.manv}">${mnv.manv}-${mnv.tennv}</option>
+								</c:forEach>
+						</select></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center"><input type="submit"
+							value="Thay đổi" /></td>
+					</tr>
+				</table>
+			</form>
+			<table id="listmanager" width="100%" hidden="true">
+			<tr>
+			<td class="titletable">Mã nhân viên</td>
+			<td class="titletable">Tên nhân viên</td>
+			<td class="titletable">Mã phòng</td>
+			<td class="titletable">Tên phòng</td>
+			</tr>
+			<c:forEach var="i" items="${listManager }">
+			<tr>
+			<td>${i.employee.manv }</td>
+			<td>${i.employee.tennv }</td>
+			<td>${i.maphong }</td>
+			<td>${i.roomRegion.makhu }</td>
+			</tr>
+			</c:forEach>
+			</table>
 			<center>
 				<font color="red">${message}</font>
 			</center>

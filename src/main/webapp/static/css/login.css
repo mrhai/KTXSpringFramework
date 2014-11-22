@@ -3,11 +3,16 @@ body {
     overflow: auto;
     margin-right: auto;
     margin-left: auto;
+    background-image: url("/HelloSpringMVCs/static/image/bg.png");
+
 }
 
 #information {
      margin-top: -15px;
-    background-color: #3CF;
+    background-color: #660000;
+
+
+
 }
 
 #information ul {
@@ -28,6 +33,14 @@ body {
     text-decoration: none;
     color: #FFF;
     background-color: #06F;
+    
+   -webkit-box-shadow: -1px 0px 41px 2px rgba(181,60,181,1);
+-moz-box-shadow: -1px 0px 41px 2px rgba(181,60,181,1);
+box-shadow: -1px 0px 41px 2px rgba(181,60,181,1);
+
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
 }
 
 
@@ -42,6 +55,8 @@ body {
   margin-top: -15px;
     padding-left: 100px;
     padding-top: 50px;
+     background-image: url("/HelloSpringMVCs/static/image/banner.png");
+   
 }
 
 
@@ -51,6 +66,9 @@ body {
     height: auto;
     width: auto;
     border: 1px groove #09F;
+    background-color: #EEEEEE;
+
+
 }
 
 #center table tr td {
@@ -61,17 +79,17 @@ body {
 }
 #center #content tr .titletable {
 	color: #FFF;
-	background-color: #3CF;
+	background-color: #660000;
 }
 
 #center #title {
-    background-color: #09F;
+    background-color: #9933FF;
     color: #FFF;
     text-align: center;
 }
 #center #nav {
     margin-top: 1px;
-    background-color: #3CF;
+    background-color: #660000;
     height: 30px;
     padding-top: 10px;
 }
@@ -94,7 +112,15 @@ body {
 }
 #center #nav ul li a:hover {
     text-decoration: none;
-    background-color: #06F;
+  background-color: #06F;
+    
+    -webkit-box-shadow: -1px 0px 41px 2px rgba(181,60,181,1);
+-moz-box-shadow: -1px 0px 41px 2px rgba(181,60,181,1);
+box-shadow: -1px 0px 41px 2px rgba(181,60,181,1);
+
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
 }
 
 #center #content {
@@ -107,7 +133,13 @@ body {
 
 #footer {
     margin-top: 1px;
-    background-color: #3CF;
+    background-color: #660000;
     color: #FFFFFF;
     text-align: center;
+    -webkit-border-bottom-right-radius: 20px;
+-webkit-border-bottom-left-radius: 20px;
+-moz-border-radius-bottomright: 20px;
+-moz-border-radius-bottomleft: 20px;
+border-bottom-right-radius: 20px;
+border-bottom-left-radius: 20px;
 }

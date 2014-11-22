@@ -176,6 +176,34 @@ public class StudentController {
     	request.setAttribute("student", new Student().getStudentList(mssv));
     	return "view";
     }
+    @RequestMapping(value = "/ktkl", method = RequestMethod.POST)
+    public String ktkl(HttpServletRequest request){
+    	String mode = request.getParameter("mode");
+    	int mssv = Integer.parseInt(request.getParameter("mssv"));
+    	String content = request.getParameter("nd");
+    	Student student = new Student();
+    	student.setMssv(mssv);
+    	if(student.klkt(mode, content) != 0){
+    		request.setAttribute("message", "Lưu thành công!");
+    		request.setAttribute("id", "ktkl");
+    	}
+    	return SVManager(request);
+    }
     
+    @RequestMapping(value = "/timktkl", method = RequestMethod.GET)
+    public String timktkl(HttpServletRequest request){
+    	int mssv;
+    	try {
+    		mssv = Integer.parseInt(request.getParameter("mssv"));
+		} catch (NumberFormatException e) {
+			mssv = 0;
+		}
+    	
+    	Student st = new Student();
+    	st.setMssv(mssv);
+    	request.setAttribute("listktkl", st.getKTKL());
+    	request.setAttribute("id", "ktkl");
+    	return SVManager(request);
+    }
     
 }

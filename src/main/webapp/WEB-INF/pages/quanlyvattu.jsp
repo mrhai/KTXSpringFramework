@@ -25,12 +25,16 @@
 		<div id="content">
 			<table>
 				<tr>
+					<!-- 						Nhập vật tư -->
 					<td><input name="vt" type="radio" id="addvt"
-						onclick="vtcase()">Nhập vật tư</input></td>
+						onclick="vtcase()" hidden="true"></input></td>
+
 					<td><input type="radio" id="movevt" name="vt"
 						onclick="vtcase()">Chuyển vật tư đến phòng</input></td>
 					<td><input type="radio" id="repairvt" name="vt"
 						onclick="vtcase()">Sữa chưa</input></td>
+					<td><input type="radio" id="historyRepair" name="vt"
+						onclick="vtcase()">Lịch sử sữa chưa</input></td>
 				</tr>
 			</table>
 
@@ -45,7 +49,7 @@
 						<td width="50%" align="right">Chọn vật tư</td>
 						<td width="50%"><select name="vt">
 								<c:forEach var="vt" items="${listVT }">
-									<option value="${vt.maso }">${vt.maso }- ${vt.tenvattu }</option>
+									<option value="${vt.maso }">${vt.maso }-${vt.tenvattu }</option>
 								</c:forEach>
 						</select></td>
 					</tr>
@@ -60,27 +64,39 @@
 				</table>
 			</form>
 
-			<form name="move" action="view.html" method="post">
+			<form name="move" action="chuyen.html" method="get">
 				<table id="move" width="100%" hidden="true">
 					<tr>
 						<td colspan="2" align="center" bgcolor="#0099FF"
 							class="titletable">Chuyển vật tư đến phòng</td>
 					</tr>
 					<tr>
-						<td width="50%" align="right">Chọn khu</td>
-						<td width="50%"><select></select></td>
+						<td align="right">Mã phòng</td>
+						<td><select name="roomnum">
+								<c:forEach var="list" items="${roomnum}">
+									<option value="${list}">${list}</option>
+								</c:forEach>
+						</select></td>
 					</tr>
 					<tr>
-						<td align="right">Chọn phòng</td>
-						<td><select></select></td>
+						<td align="right">Mã khu</td>
+						<td><select name="roomregion">
+								<c:forEach var="list" items="${roomregion}">
+									<option value="${list.makhu}">${list.tenkhu}</option>
+								</c:forEach>
+						</select></td>
 					</tr>
 					<tr>
-						<td align="right">Chọn vật tư</td>
-						<td><select></select></td>
+						<td width="50%" align="right">Chọn vật tư</td>
+						<td width="50%"><select name="vt">
+								<c:forEach var="vt" items="${listVT }">
+									<option value="${vt.maso }">${vt.maso }-${vt.tenvattu }</option>
+								</c:forEach>
+						</select></td>
 					</tr>
 					<tr>
 						<td align="right">Số lượng</td>
-						<td><input type="text" name="mssv" /></td>
+						<td><input type="text" name="sl" /></td>
 					</tr>
 					<tr>
 						<td colspan="2" align="center"><input type="submit"
@@ -88,24 +104,35 @@
 					</tr>
 				</table>
 			</form>
-			<form action="delete.html" , method="post">
+			<form action="suachua.html" , method="get">
 				<table id="repair" width="100%" hidden="true">
 					<tr>
 						<td colspan="2" align="center" bgcolor="#0099FF"
-							class="titletable">Xữa chưa</td>
+							class="titletable">Sữa chưa</td>
 					</tr>
 					<tr>
-
-						<td align="right">Chọn khu</td>
-						<td><select></select></td>
+						<td align="right">Mã phòng</td>
+						<td><select name="roomnum">
+								<c:forEach var="list" items="${roomnum}">
+									<option value="${list}">${list}</option>
+								</c:forEach>
+						</select></td>
 					</tr>
 					<tr>
-						<td width="50%" align="right">Chọn phòng</td>
-						<td width="50%"><select></select></td>
+						<td align="right">Mã khu</td>
+						<td><select name="roomregion">
+								<c:forEach var="list" items="${roomregion}">
+									<option value="${list.makhu}">${list.tenkhu}</option>
+								</c:forEach>
+						</select></td>
 					</tr>
 					<tr>
-						<td width="50%" align="right">Chọn Vật tư</td>
-						<td width="50%"><select></select></td>
+						<td width="50%" align="right">Chọn vật tư</td>
+						<td width="50%"><select name="vt">
+								<c:forEach var="vt" items="${listVT }">
+									<option value="${vt.maso }">${vt.maso }-${vt.tenvattu }</option>
+								</c:forEach>
+						</select></td>
 					</tr>
 					<tr>
 						<td width="50%" align="right">Giá sửa</td>
@@ -117,6 +144,56 @@
 					</tr>
 				</table>
 			</form>
+			<form action="lichsu.html" method="get">
+			<table id="history" hidden="true" width="100%">
+			<tr>
+						<td colspan="2" align="center" bgcolor="#0099FF"
+							class="titletable">Sữa chưa</td>
+					</tr>
+					<tr>
+						<td width="50%" align="right">Mã phòng</td>
+						<td width="50%"><select name="roomnum">
+						<option value="">---</option>
+								<c:forEach var="list" items="${roomnum}">
+									<option value="${list}">${list}</option>
+								</c:forEach>
+						</select></td>
+					</tr>
+					<tr>
+						<td width="50%" align="right">Mã khu</td>
+						<td width="50%"><select name="roomregion">
+						<option value="">---</option>
+								<c:forEach var="list" items="${roomregion}">
+									<option value="${list.makhu}">${list.tenkhu}</option>
+								</c:forEach>
+						</select></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center"><input type="submit" value="Xem"/></td>
+					</tr>
+			</table>
+			</form>
+			<table width="100%">
+			<tr>
+			<td class="titletable" align="center">Mã phòng</td>
+			<td class="titletable" align="center">Mã khu</td>
+			<td class="titletable" align="center">Mã vật tư</td>
+			<td class="titletable" align="center">Tên vật tư</td>
+			<td class="titletable" align="center">Ngày sửa</td>
+			<td class="titletable" align="center">Giá</td>
+			</tr>
+			<c:forEach var="i" items="${history }">
+			<tr>
+			<td align="center">${i.maphong }</td>
+			<td align="center">${i.roomRegion.makhu }</td>
+			<td align="center">${i.device.maso }</td>
+			<td align="center">${i.device.tenvattu }</td>
+			<td align="center">${i.device.ngaysua }</td>
+			<td align="center">${i.device.gia }</td>
+			</tr>
+			</c:forEach>
+			</table>
+			
 			<center>
 				<font color="red">${message}</font>
 			</center>

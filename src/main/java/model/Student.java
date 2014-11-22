@@ -194,6 +194,46 @@ public class Student {
     	return list;
     }
     
+    public int klkt(String mode, String content){
+
+    	int id = 0;
+    	int leg = 0;
+    	String command = "SELECT MAX(id) as max FROM klkt";
+    	try {
+			ResultSet rs = db.execute(command);
+			while (rs.next()) {
+				id = rs.getInt("max")+1;	
+			}
+			command = "insert INTO klkt VALUE("+id+",'"+mode+"','"+content+"',"+mssv+")";
+			leg = db.update(command);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return leg;
+    }
+    
+    public ArrayList<KTKL> getKTKL(){
+    	ArrayList<KTKL> list = new ArrayList<KTKL>();
+    	String command;
+    	if(mssv ==0){
+    		command = "select * from klkt";
+    	}else{
+    		command = "select * from klkt where mssv = "+mssv;
+    	}
+    	
+    	try {
+			ResultSet rs = db.execute(command);
+			while (rs.next()) {
+				list.add(new KTKL(rs.getInt("id"), rs.getString("loai"), rs.getString("noidung"), rs.getInt("mssv")));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return list;
+    }
+    
     public int getMssv() {
         return mssv;
     }

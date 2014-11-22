@@ -39,7 +39,7 @@
 						viên</td>
 					<td align="center"><input type="radio" id="arrears"
 						name="addorchange" onclick="addorchangeAction()" />Nợ hóa đơn</td>
-					<td align="center"><input type="radio" id="studenlist"
+					<td align="center"><input type="radio" id="khenthuong"
 						name="addorchange" onclick="addorchangeAction()" />Khen thưởng/
 						Kỉ luật</td>
 				</tr>
@@ -90,7 +90,15 @@
 					</tr>
 					<tr>
 						<td align="right">Khoa</td>
-						<td><input type="text" name="khoa" /></td>
+						<td>
+						<select name="khoa">
+							<option value="CNTT">Công nghệ thông tin</option>
+							<option value="KT">Kinh tế</option>
+							<option value="TS">Thủy sản</option>
+							<option value="MT">Môi trường</option>
+							<option value="NT">Nông học</option>
+						</select>
+						</td>
 					<tr />
 					<tr>
 						<td align="right">Số điện thoại</td>
@@ -237,6 +245,83 @@
 
 				</c:forEach>
 			</table>
+			<form action="ktkl.html" method="post">
+			<table id="khen" width="100%" hidden="true">
+				<tr>
+						<td colspan="2" align="center" bgcolor="#0099FF"
+							class="titletable">Khen thưởng/ Kỉ luật</td>
+					</tr>
+					<tr>
+						<td width="45%" align="right">Chọn mục</td>
+						<td width="55%"><select name="mode">
+								<option value="">---</option>
+								<option value="khen">Khen thưởng</option>
+								<option value="kl">Kỉ luật</option>
+								
+						</select></td>
+					</tr>
+					
+					<tr>
+						<td width="45%" align="right">Mã sinh viên</td>
+						<td width="55%">
+						<input type="text" name="mssv"></input>
+						</td>
+					</tr>
+					<tr valign="top">
+						<td width="45%" align="right">Nội dung</td>
+						<td width="55%">
+						<textarea rows="5" cols="30" name="nd"></textarea>
+						</td>
+					</tr>
+				
+					<tr>
+						<td colspan="2" align="center"><input type="submit"
+							value="Lưu" /></td>
+					</tr>
+					</table>
+					</form>
+					<form action="timktkl" method="get">
+					<table id="timktkl" width = "100%" hidden="true">
+					<tr>
+						<td colspan="2" align="center" bgcolor="#0099FF"
+							class="titletable">Danh sách kỉ luật khen thưởng</td>
+					</tr>
+					
+					<tr>
+						<td width="45%" align="right">Mã sinh viên</td>
+						<td width="55%">
+						<input type="text" name="mssv"></input>
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="2" align="center"><input type="submit" value="Tìm"/></td>
+					</tr>
+					
+				</table>
+				</form>
+				<table id="listktkl" width="100%" hidden="true">
+				<tr>
+					<td width="20%" align="center" class="titletable">Mã số sinh viên</td>
+					<td width="20%" align="center" class="titletable">Khen thưởng/ Kỉ luật</td>
+					<td width="60%" align="center" class="titletable">Nội dung</td>
+					</tr>
+					<c:forEach var = "ktkl" items="${listktkl }">
+					<tr>
+					<td align="center">${ktkl.mssv }</td>
+					<td align="center">
+					<c:choose>
+					<c:when test="${ktkl.mode == 'kt'}">Khen thưởng</c:when>
+					<c:when test="${ktkl.mode == 'kl'}">Kỉ luật</c:when>
+					</c:choose>
+					</td>
+					<td align="left">${ktkl.noidung }</td>
+					</tr>
+					</c:forEach>
+				</table>
+				
+			</table>
+			
 			<table id="bill" width = "100%" hidden="true">
 				<tr>
 					<td class="titletable" align="center">Mã sinh viên</td>

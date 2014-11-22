@@ -29,6 +29,9 @@ public class EmployeeController {
                 request.setAttribute("manv", new Employee().autoMNV());
                 request.setAttribute("chucvu", new Employee().getPosition());
                 request.setAttribute("mnv", new Employee().getMNV());
+                request.setAttribute("roomnum", new Room().roomList());
+                request.setAttribute("roomregion", new RoomRegion().regionList());
+                request.setAttribute("listManager", new Room().listManager());
                 return "quanlynhanvien";
             } else {
                 request.setAttribute("message", "Bạn không có quyền truy cập vào mục vừa rồi!");
@@ -86,5 +89,23 @@ public class EmployeeController {
         }
          request.setAttribute("id", "change");
         return employeeManager(request);
+    }
+    
+    @RequestMapping(value="/room",method = RequestMethod.GET)
+    public String changeRoom(HttpServletRequest request){
+    	int mnv = Integer.parseInt(request.getParameter("mnv"));
+    	int maphong = Integer.parseInt(request.getParameter("roomnum"));
+    	int makhu = Integer.parseInt(request.getParameter("roomregion"));
+    	 RoomRegion region = new RoomRegion();
+    	 region.setMakhu(makhu);
+    	 Room room = new Room();
+    	 room.setMaphong(maphong);
+    	 room.setRoomRegion(region);
+    	 if(room.changeRoomManager(mnv) != 0){
+    		 request.setAttribute("message", "Đã thay đổi cán bộ quản lý phòng!");
+    		 request.setAttribute("id", "room");
+    	 }
+    	
+    	return employeeManager(request);
     }
 }

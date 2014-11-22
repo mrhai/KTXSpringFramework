@@ -103,6 +103,104 @@ public class Room {
 
     }
 
+    public int changeRoomManager(int mnv){
+    	int leg = 0;
+    	String command = "UPDATE phong SET manhanvien = "+mnv+" WHERE maphong = "+maphong+" and makhu = "+roomRegion.getMakhu();
+    	System.out.println(command);
+    	try {
+			leg = db.update(command);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return leg;
+    }
+    
+    public ArrayList<Room> listManager(){
+    	ArrayList<Room> list = new ArrayList<Room>();
+    	String command = "select nhanvien.manhanvien, nhanvien.tennhanvien, phong.maphong,phong.makhu from nhanvien INNER JOIN phong on nhanvien.manhanvien = phong.manhanvien ORDER BY nhanvien.manhanvien ASC";
+    	try {
+			ResultSet rs = db.execute(command);
+			Employee employee;
+			Room room;
+			RoomRegion region;
+			while (rs.next()) {
+				employee = new Employee();
+				employee.setManv(rs.getInt("manhanvien"));
+				employee.setTennv(rs.getString("tennhanvien"));
+				room = new Room();
+				room.setMaphong(rs.getInt("maphong"));
+				region = new RoomRegion();
+				region.setMakhu(rs.getInt("makhu"));
+				room.setRoomRegion(region);
+				room.setEmployee(employee);
+				list.add(room);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return list;
+    }
+    
+    public int chuyenVT(){
+    	int leg = 0;
+    	String command = "INSERT INTO chitietvattupphong VALUE("+maphong+","+roomRegion.getMakhu()+","+device.getMaso()+","+device.getSoluong()+")";
+    	try {
+			leg = db.update(command);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			if(leg == 0){
+				command = "UPDATE chitietvattupphong SET soluong= soluong +"+device.getSoluong()+" WHERE maphong="+maphong+" AND makhu="+roomRegion.getMakhu()+" AND mavattu="+device.getMaso()+"";
+				System.out.println(command);
+				try {
+					leg = db.update(command);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
+    	return leg;
+    }
+    
+    
+    public ArrayList<Room> getDSRepair(){
+    	
+    	String command = "select maphong, makhu,mavattu,tenvattu,ngaysua,giasuachua from chitietsuachua INNER JOIN vattu ON chitietsuachua.mavattu = vattu.maso INNER JOIN quanlysuachua ON chitietsuachua.masuachua = quanlysuachua.maso where maphong = "+maphong+" and makhu = "+roomRegion.getMakhu();
+    	System.out.println(command);
+    	ArrayList<Room> list = new ArrayList<Room>();
+    	try {
+			ResultSet rs = db.execute(command);
+			RoomRegion region;
+			Device device;
+			Room room;
+			while (rs.next()) {
+				region = new RoomRegion();
+				region.setMakhu(rs.getInt("makhu"));
+				device = new Device();
+				device.setMaso(rs.getInt("mavattu"));
+				device.setTenvattu(rs.getString("tenvattu"));
+				device.setGia(rs.getDouble("giasuachua"));
+				device.setNgaysua(rs.getString("ngaysua"));
+				room = new Room();
+				room.setDevice(device);
+				room.setRoomRegion(region);
+				room.setMaphong(rs.getInt("maphong"));
+				list.add(room);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return list;
+    }
+    
+    public int repairDevice(){
+    	return device.repair(maphong, roomRegion.getMakhu());
+    }
+    
     public int getMaphong() {
         return maphong;
     }
