@@ -27,7 +27,7 @@
 			<table>
 				<tr>
 					<td align="center"><input type="radio" id="add"
-						name="addorchange" onclick="addorchangeAction()" />Nhận sinh viên</td>
+						name="addorchange" onclick="addorchangeAction()" checked="checked" />Nhận sinh viên</td>
 					<td align="center"><input type="radio" id="delete"
 						name="addorchange" onclick="addorchangeAction()" />Xóa thông tin
 						sinh viên</td>

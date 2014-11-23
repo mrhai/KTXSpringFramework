@@ -27,7 +27,7 @@
 			<table>
 				<tr>
 					<td><input type="radio" id="addemployee" name="employee"
-						onclick="employeecase()">Nhận nhân viên</input></td>
+						onclick="employeecase()" checked="checked">Nhận nhân viên</input></td>
 					<td><input type="radio" id="deleteemployee" name="employee"
 						onclick="employeecase()">Xóa nhân viên</input></td>
 					<td><input type="radio" id="changesalary" name="employee"

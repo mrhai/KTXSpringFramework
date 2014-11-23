@@ -27,10 +27,10 @@
 				<tr>
 					<!-- 						Nhập vật tư -->
 					<td><input name="vt" type="radio" id="addvt"
-						onclick="vtcase()" hidden="true"></input></td>
+						onclick="vtcase()" hidden="true" checked="checked"></input></td>
 
 					<td><input type="radio" id="movevt" name="vt"
-						onclick="vtcase()">Chuyển vật tư đến phòng</input></td>
+						onclick="vtcase()" >Chuyển vật tư đến phòng</input></td>
 					<td><input type="radio" id="repairvt" name="vt"
 						onclick="vtcase()">Sữa chưa</input></td>
 					<td><input type="radio" id="historyRepair" name="vt"

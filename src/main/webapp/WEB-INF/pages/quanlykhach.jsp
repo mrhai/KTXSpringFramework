@@ -24,7 +24,7 @@
             <div id="content">
                 <table>
                     <tr>
-                        <td><input name="guest" type="radio" id="addguest"  onclick="guestcase()">Ghi nhận thông tin khách</input></td>
+                        <td><input name="guest" type="radio" id="addguest"  onclick="guestcase()" checked="checked">Ghi nhận thông tin khách</input></td>
                         <td><input type="radio" id="checkguest" name="guest" onclick="guestcase()">Danh sách khách</input></td>
                         <td><input type="radio" id="deleteguest" name="guest" onclick="guestcase()">Xóa thông tin khách</input></td>
                     </tr>

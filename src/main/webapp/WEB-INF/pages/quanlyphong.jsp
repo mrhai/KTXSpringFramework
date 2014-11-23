@@ -20,14 +20,16 @@
             <div id="title">Quản lý Phòng</div>
             <jsp:include page="components/adminnav.jsp"/>
             <div id="content">
-                <table width="100%">
+                <table>
                     <tr>
                         <td><input type="radio" id="emptyroom" name="room" checked="true" onclick="roomcase()" >Phòng trống</input></td>
                         <td><input type="radio" id="addroom" name="room" onclick="roomcase()">Thêm phòng</input></td>
-                        <td><input type="radio" id="deleteroom" name="room" onclick="roomcase()">Xóa phòng</input></td>
                         <td><input type="radio" id="addregion" name="room" onclick="roomcase()">Thêm khu nhà</input></td>
-                        <td><input type="radio" id="deleteregion" name="room" onclick="roomcase()">Xóa khu nhà</input></td>
-                        <td><input type="radio" id="changeemployee" name="room" onclick="roomcase()">Thay đổi cán bộ quản lý</input></td>
+                        <!--                         xoa phong -->
+                        <td><input type="radio" id="deleteroom" name="room" onclick="roomcase()" hidden="true"></input></td>
+                        <!--                         Xóa khu nhà -->
+                        <td><input type="radio" id="deleteregion" name="room" onclick="roomcase()" hidden="true"></input></td>
+                        <td><input type="radio" id="changeemployee" name="room" onclick="roomcase()">DS phong</input></td>
                     </tr>
                 </table>
                 <form action="#" method="post">
@@ -120,22 +122,15 @@
                 <form action="#" method="post">
                     <table id="changeemployeetb" width="100%"  hidden="true">
                         <tr>
-                            <td colspan="2" align="center" bgcolor="#0099FF" class="titletable" >Thay đổi cán bộ quản lý</td>
+                            <td colspan="2" align="center" bgcolor="#0099FF" class="titletable" >Danh sách phòng</td>
                         </tr>
                         <tr>
                             <td width="50%" align="right">Chọn khu nhà</td>
                             <td width="50%"><select></select></td>
                         </tr>
+                       
                         <tr>
-                            <td width="50%" align="right">Chọn phòng</td>
-                            <td width="50%"><select></select></td>
-                        </tr>
-                        <tr>
-                            <td width="50%" align="right">Chọn nhân viên</td>
-                            <td width="50%"><select></select></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" align="center"><input type="submit" value="Thay đổi"/></td>
+                            <td colspan="2" align="center"><input type="submit" value="Xem"/></td>
                         </tr>
                     </table>
                 </form>
