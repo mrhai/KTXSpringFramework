@@ -6,6 +6,9 @@
 
 package model;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -13,6 +16,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.Number;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 
 /**
  *
@@ -232,6 +243,165 @@ public class Student {
 			e.printStackTrace();
 		}
     	return list;
+    }
+    
+    public void in(String type){
+    	File file = null;
+    	try {
+    	File dir = new File("C:/print");
+		dir.mkdirs();
+		file = new File("C:/print/"+type+".xls");
+		WritableWorkbook workbook = Workbook.createWorkbook(file);
+    	if(type.equals("dssv")){
+				printSVList(workbook);
+				
+    	}else if(type.equals("dsnhd")){
+    		printNHD(workbook);
+    	}else if(type.equals("ktkl")){
+    		printKTKL(workbook);
+    	}
+    	
+    	} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				Desktop.getDesktop().open(file);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+    }
+    
+    public void printSVList(WritableWorkbook workbook){
+    	try {
+    	WritableSheet sheet = workbook.createSheet("DS SINH VIÊN", 0);
+    	sheet.addCell(new Label(0, 0, "DANH SÁCH SINH VIÊN"));
+    	sheet.addCell(new Label(0, 2, "MSSV"));
+    	sheet.addCell(new Label(1, 2, "Tên SV"));
+    	sheet.addCell(new Label(2, 2, "Ngày sinh"));
+    	sheet.addCell(new Label(3, 2, "Quê quán"));
+    	sheet.addCell(new Label(4, 2, "Lớp"));
+    	sheet.addCell(new Label(5, 2, "Khoa"));
+    	sheet.addCell(new Label(6, 2, "SDT"));
+    	sheet.addCell(new Label(7, 2, "Ngày ở"));
+    	sheet.addCell(new Label(8, 2, "Ngày đi"));
+    	int col = 0;
+    	int row = 4;
+    	String command = "select * from sinhvien";
+    	
+			ResultSet rs = db.execute(command);
+			while (rs.next()) {
+				col = 0;
+				sheet.addCell(new Number(col++,row, rs.getInt("masv")));
+				sheet.addCell(new Label(col++, row,rs.getString("tensv")));
+				sheet.addCell(new Label(col++,row,rs.getString("ngaysinh")));
+				sheet.addCell(new Label(col++,row,rs.getString("quequan")));
+				sheet.addCell(new Label(col++,row,rs.getString("lop")));
+				sheet.addCell(new Label(col++,row,rs.getString("khoa")));
+				sheet.addCell(new Number(col++,row, rs.getInt("sdt")));
+				sheet.addCell(new Label(col++,row,rs.getString("ngayo")));
+				sheet.addCell(new Label(col++,row,rs.getString("ngaydi")));
+				row++;
+			}
+			workbook.write();
+			workbook.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RowsExceededException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (WriteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
+    
+    public void printNHD(WritableWorkbook workbook){
+    	try {
+    	WritableSheet sheet = workbook.createSheet("DS NỢ HÓA ĐƠN", 0);
+    	sheet.addCell(new Label(0, 0, "DANH SÁCH SINH VIÊN NỢ HÓA ĐƠN"));
+    	sheet.addCell(new Label(0, 2, "MSSV"));
+    	sheet.addCell(new Label(1, 2, "Mã khu"));
+    	sheet.addCell(new Label(2, 2, "Mã phòng"));
+    	sheet.addCell(new Label(3, 2, "Tiền nợ"));
+    	
+    	int col = 0;
+    	int row = 4;
+    	String command = "select chitietphong.masv, chitietphong.makhu, chitietphong.maphong, sum(hoadon.tongtien) as tien from chitietphong INNER JOIN hoadon ON chitietphong.maphong = hoadon.maphong and chitietphong.makhu = hoadon.makhu WHERE hoadon.thanhtoan = 'chua' GROUP BY chitietphong.masv, chitietphong.makhu, chitietphong.maphong";
+    	
+			ResultSet rs = db.execute(command);
+			while (rs.next()) {
+				col = 0;
+				sheet.addCell(new Number(col++,row, rs.getInt("masv")));
+				sheet.addCell(new Number(col++,row, rs.getInt("makhu")));
+				sheet.addCell(new Number(col++,row, rs.getInt("maphong")));
+				sheet.addCell(new Number(col++,row, rs.getDouble("tien")));
+				
+				row++;
+			}
+			workbook.write();
+			workbook.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RowsExceededException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (WriteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
+    
+    public void printKTKL(WritableWorkbook workbook){
+    	try {
+    	WritableSheet sheet = workbook.createSheet("DS KHEN THƯỞNG_KỶ LUẬT", 0);
+    	sheet.addCell(new Label(0, 0, "DANH SÁCH SINH VIÊN ĐƯỢC KHEN THƯỞNG VÀ KỶ LUẬT"));
+    	sheet.addCell(new Label(0, 2, "MSSV"));
+    	sheet.addCell(new Label(1, 2, "Khen thưởng/ Kỷ luật"));
+    	sheet.addCell(new Label(2, 2, "Nội dung"));
+    	
+    	int col = 0;
+    	int row = 4;
+    	String command = "SELECT * FROM klkt";
+    	
+			ResultSet rs = db.execute(command);
+			while (rs.next()) {
+				col = 0;
+				sheet.addCell(new Number(col++,row, rs.getInt("mssv")));
+				String loai = rs.getString("loai");
+				if(loai.equals("kt")) sheet.addCell(new Label(col++,row, "Khen thưởng"));
+				else sheet.addCell(new Label(col++,row,"Kỷ luật" ));
+				sheet.addCell(new Label(col++,row, rs.getString("noidung")));
+				row++;
+			}
+			workbook.write();
+			workbook.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (RowsExceededException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (WriteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     }
     
     public int getMssv() {

@@ -8,5 +8,6 @@
            <li><a href="${pageContext.request.contextPath}/guest/guestmanager.html">Quản lý khách</a></li>
             <li><a href="${pageContext.request.contextPath}/vattu/vattu.html">Quản lý Vật tư</a></li>
           <li><a href="${pageContext.request.contextPath}/accounting/accountingmanager.html">Kế toán</a></li>
+          <li><a href="${pageContext.request.contextPath}/print/print.html">In ấn</a></li>
           </ul>
           </div>

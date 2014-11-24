@@ -61,7 +61,7 @@ public class AccountingController {
 		
 		return accountingManager(request);
 	}
-	@RequestMapping(value = "out", method = RequestMethod.GET)
+	@RequestMapping(value = "/out", method = RequestMethod.GET)
 	public String out(HttpServletRequest request){
 		int maphong = Integer.parseInt(request.getParameter("roomnum"));
 		int makhu = Integer.parseInt(request.getParameter("roomregion"));
