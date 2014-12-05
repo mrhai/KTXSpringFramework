@@ -5,11 +5,17 @@
  */
 package model;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import jxl.Workbook;
+import jxl.write.WritableWorkbook;
 
 /**
  *
@@ -53,6 +59,7 @@ public class Room {
 
     public boolean checkRoom() {
         String command = "select * from phong WHERE maphong = " + maphong + " and makhu = " + roomRegion.getMakhu() + " HAVING svhientai < succhua ";
+        System.out.println(command);
         try {
             ResultSet rs = db.execute(command);
             while (rs.next()) {
@@ -77,10 +84,18 @@ public class Room {
 
     }
 
+    public ArrayList<Device> getbaohong(){
+    	device = new Device();
+    	return device.getbaohong(maphong, roomRegion.getMakhu());
+    }
+    
+    public void baohong(){
+    	device.baohong(maphong, roomRegion.getMakhu());
+    }
+    
     public void studentsDropped(int masv) {
         try {
             String chitiet = "select * from chitietphong where masv = " + masv;
-            System.out.println(chitiet);
             ResultSet rs = db.execute(chitiet);
             int phong = 0;
             int makhu = 0;
@@ -89,14 +104,12 @@ public class Room {
                 makhu = rs.getInt("makhu");
             }
             String present = "select svhientai from phong WHERE maphong = " + phong + " and makhu=" + makhu;
-            System.out.println(present);
             ResultSet rspresent = db.execute(present);
             int presentInt = 0;
             while (rspresent.next()) {
                 presentInt = rspresent.getInt("svhientai");
             }
             String update = "UPDATE phong SET svhientai = " + (presentInt - 1) + " WHERE makhu = " + makhu + " and maphong=" + phong;
-            System.out.println(update);
             db.update(update);
         } catch (Exception e) {
         }
@@ -145,14 +158,15 @@ public class Room {
     
     public int chuyenVT(){
     	int leg = 0;
-    	String command = "INSERT INTO chitietvattupphong VALUE("+maphong+","+roomRegion.getMakhu()+","+device.getMaso()+","+device.getSoluong()+")";
+    	String command = "INSERT INTO chitietvattupphong VALUE("+maphong+","+roomRegion.getMakhu()+","+device.getMaso()+","+device.getSoluong()+",0)";
+    	System.out.println(command);
     	try {
 			leg = db.update(command);
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			if(leg == 0){
-				command = "UPDATE chitietvattupphong SET soluong= soluong +"+device.getSoluong()+" WHERE maphong="+maphong+" AND makhu="+roomRegion.getMakhu()+" AND mavattu="+device.getMaso()+"";
+				command = "UPDATE chitietvattupphong SET soluong= (soluong + "+device.getSoluong()+") WHERE maphong="+maphong+" AND makhu="+roomRegion.getMakhu()+" AND mavattu="+device.getMaso()+"";
 				System.out.println(command);
 				try {
 					leg = db.update(command);
@@ -196,6 +210,28 @@ public class Room {
 		}
     	return list;
     }
+    
+    public void in(String type){
+    	File file = null;
+    	try {
+    	File dir = new File("C:/print");
+		dir.mkdirs();
+		file = new File("C:/print/"+type+".xls");
+		WritableWorkbook workbook = Workbook.createWorkbook(file);
+		device.printDeviceList(workbook, maphong, roomRegion.getMakhu());
+    	} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				Desktop.getDesktop().open(file);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+    }
+    
     
     public int repairDevice(){
     	return device.repair(maphong, roomRegion.getMakhu());

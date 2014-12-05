@@ -79,11 +79,11 @@ border-radius: 10px;
 }
 #center #content tr .titletable {
 	color: #FFF;
-	background-color: #660000;
+	background-color: #3CF;
 }
 
 #center #title {
-    background-color: #9933FF;
+    background-color: #660000;
     color: #FFF;
     text-align: center;
 }

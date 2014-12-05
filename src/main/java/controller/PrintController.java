@@ -22,7 +22,9 @@ public class PrintController {
 	public String print(HttpServletRequest request){
 		 user = new GeneralUser();
 	        if(user.checkSession(request.getSession())){
-	        	
+	        	request.setAttribute("roomregion",
+						new RoomRegion().regionList());
+	        	request.setAttribute("roomnum", new Room().roomList());
 	            return "in";
 	         } else {
 	            return "dangnhap";
@@ -42,6 +44,20 @@ public class PrintController {
 		String type = request.getParameter("type");
 		Employee employee = new Employee();
 		employee.in(type);
+		return print(request);
+	}
+	@RequestMapping(value = "/invt", method = RequestMethod.GET)
+	public String inVT(HttpServletRequest request){
+		int maphong = Integer.parseInt(request.getParameter("maphong"));
+		int makhu = Integer.parseInt(request.getParameter("makhu"));
+		RoomRegion region = new RoomRegion();
+		region.setMakhu(makhu);
+		Room room = new Room();
+		room.setMaphong(maphong);
+		room.setRoomRegion(region);
+		room.setDevice(new Device());
+		room.in("DSVT");
+		request.setAttribute("id", "vt");
 		return print(request);
 	}
 }

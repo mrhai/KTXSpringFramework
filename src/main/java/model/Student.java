@@ -43,12 +43,13 @@ public class Student {
     private String ngaydi;
     private int leave;
     private double tienthieu;
+    private String avatar;
     Database db = Database.create();
     public Student() {
     }
 
     
-    public Student(int mssv, String tensv, String ngaysinh, String quequan, String lop, String khoa, Room room, int sdt,String ngaydi) {
+    public Student(int mssv, String tensv, String ngaysinh, String quequan, String lop, String khoa, Room room, int sdt,String ngaydi,String avatar) {
         this.mssv = mssv;
         this.tensv = tensv;
         this.ngaysinh = ngaysinh;
@@ -58,6 +59,7 @@ public class Student {
         this.room = room;
         this.sdt = sdt;
         this.ngaydi = ngaydi;
+        this.avatar = avatar;
     }
 
     public int add() throws SQLException{
@@ -66,7 +68,7 @@ public class Student {
         ngayo = dmyFormat.format(new Date());
 
         
-        String command = "INSERT INTO sinhvien VALUE("+mssv+",'"+tensv+"','"+ngaysinh+"','"+quequan+"','"+lop+"','"+khoa+"',"+sdt+",'"+ngayo+"','"+ngaydi+"')";
+        String command = "INSERT INTO sinhvien VALUE("+mssv+",'"+tensv+"','"+ngaysinh+"','"+quequan+"','"+lop+"','"+khoa+"',"+sdt+",'"+ngayo+"','"+ngaydi+"','"+avatar+"')";
         String command2 = "INSERT INTO chitietphong value("+room.getMaphong()+","+room.getRoomRegion().getMakhu()+","+mssv+")";
         String command3 = "INSERT INTO taikhoansv value("+mssv+",'123456')";
         leg += db.update(command);
@@ -82,15 +84,21 @@ public class Student {
         String command = "delete from chitietphong where masv = "+mssv;
         String command2 = "delete from taikhoansv where mssv = "+mssv;
         String command3 = "delete from khach where masv = "+mssv;
+        String command5 = "delete from klkt where mssv = "+mssv;
         String command4 = "delete from sinhvien where masv = "+mssv;
+        
         room.studentsDropped(mssv);
         try{
         leg += db.update(command);
         leg += db.update(command2);
         leg += db.update(command3);
+        leg += db.update(command5);
         leg += db.update(command4);
-        
-        }catch(SQLException e){}
+       
+        System.out.println(leg);
+        }catch(SQLException e){
+        	e.printStackTrace();
+        }
         return leg;
     }
     
@@ -164,6 +172,39 @@ public class Student {
     	return leg;
     }
     
+    public ArrayList<Student> getStudentRoom(){
+    	ArrayList<Student> list = new ArrayList<>();
+    	RoomRegion region;
+    	
+    	String command = "SELECT maphong, makhu from chitietphong where masv = "+mssv;
+    	ResultSet rs;
+		try {
+			rs = db.execute(command);
+			while (rs.next()) {
+				region = new RoomRegion();
+				region.setMakhu(rs.getInt("makhu"));
+				room = new Room();
+				room.setMaphong(rs.getInt("maphong"));
+				room.setRoomRegion(region);
+			}
+			String get = "SELECT sinhvien.masv, sinhvien.tensv from chitietphong INNER JOIN sinhvien on chitietphong.masv = sinhvien.masv where maphong = "+room.getMaphong()+" and makhu = "+room.getRoomRegion().getMakhu();
+			System.out.println(get);
+			rs = db.execute(get);
+			Student student;
+			while (rs.next()) {
+				student = new Student();
+				student.setMssv(rs.getInt("masv"));
+				student.setTensv(rs.getString("tensv"));
+				list.add(student);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return list;
+    }
+    
     public ArrayList<Student> getStudentList(String masv){
     	String command;
     	if(masv.equals("")){
@@ -195,6 +236,7 @@ public class Student {
 				student.setNgayo(rs.getString("ngayo"));
 				student.setNgaydi(rs.getString("ngaydi"));
 				student.setLeave(leave);
+				student.setAvatar(rs.getString("avatar"));
 				list.add(student);
 			}
 		} catch (SQLException e) {
@@ -404,6 +446,8 @@ public class Student {
     	
     }
     
+    
+    
     public int getMssv() {
         return mssv;
     }
@@ -506,6 +550,16 @@ public class Student {
 
 	public void setTienthieu(double tienthieu) {
 		this.tienthieu = tienthieu;
+	}
+
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
     
     

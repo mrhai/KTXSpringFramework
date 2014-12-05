@@ -42,6 +42,14 @@ public class EmployeeUser extends User{
 
     @Override
     public int doimatkhau() {
+    	String command = "UPDATE taikhoannhanvien set matkhau = '"+matkhau+"' where manv = "+employee.getManv();
+    	System.out.println(command);
+    	try {
+			db.update(command);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return 0;
     }
 

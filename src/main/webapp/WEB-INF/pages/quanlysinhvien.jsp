@@ -44,7 +44,7 @@
 						Kỉ luật</td>
 				</tr>
 			</table>
-			<form action="add.html" method="post">
+			<form action="add.html" method="post" ENCTYPE='multipart/form-data'>
 				<table id="addsv" width="100%" hidden="true">
 					<tr>
 						<td colspan="2" align="center" bgcolor="#0099FF"
@@ -110,14 +110,15 @@
 						<td><input type="text" name="ngaydi" /></td>
 					</tr>
 					<tr>
+						<td align="right">Hình đại diện</td>
+						<td><input type="file" name="file" /></td>
+					</tr>
+					<tr>
 						<td colspan="2" align="center"><input type="submit"
 							value="Ghi thông tin" /></td>
 
 					</tr>
-					<tr>
-						<td colspan="2" align="right"></td>
 
-					</tr>
 				</table>
 			</form>
 			<form name="delete" method="post" action="deletesv.html"

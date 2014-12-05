@@ -41,6 +41,14 @@ public class StudentUser extends User{
 
     @Override
     public int doimatkhau() {
+    	String command = "UPDATE taikhoansv set matkhau = '"+matkhau+"' where mssv = "+student.getMssv();
+    	System.out.println(command);
+    	try {
+			db.update(command);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return 0;
     }
     

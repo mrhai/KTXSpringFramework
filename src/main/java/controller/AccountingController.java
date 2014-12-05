@@ -56,6 +56,8 @@ public class AccountingController {
 		bill.setRoom(room);
 		if(bill.createBill() != 0){
 			request.setAttribute("message", "Đã tạo hóa đơn phòng "+maphong+" khu "+makhu);
+		}else{
+			request.setAttribute("message", "Hóa đơn tháng này đã được tạo");
 		}
 		
 		

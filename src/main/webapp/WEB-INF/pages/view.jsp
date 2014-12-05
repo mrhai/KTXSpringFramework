@@ -11,8 +11,10 @@
 </head>
 <body>
 <h1>Thông tin sinh viên</h1>
+
 <table width="100%">
 <tr >
+<th class="titletable">Hình đại diện</th>
 <th class="titletable">Mã số sinh viên</th>
 <th class="titletable">Họ tên</th>
 <th class="titletable">Ngày sinh</th>
@@ -25,6 +27,7 @@
 </tr>
 <tr>
 <c:forEach var="st" items="${student }">
+<td align="center"><img src = "${pageContext.request.contextPath}/static/uploads/${st.avatar }" width="100px" height="100px"/></td>
 <td align="center">${st.mssv }</td>
 <td align="center">${st.tensv }</td>
 <td align="center">${st.ngaysinh }</td>

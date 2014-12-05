@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -24,51 +25,81 @@ import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
  * @author MrHai
  */
 public class Bill {
-    
-    private int mahoadon;
-    private double giadien;
-    private int sodien;
-    private double gianuoc;
-    private int sonuoc;
-    private Room room;
-    private int tienphong;
-    private String thoigian;
-    private double tongtien;
-    Database db = Database.create();
-    public static final int GIADIEN = 2500;
-    public static final int GIANUOC = 4000;
-    
-    
-    public Bill() {
-		
+
+	private int mahoadon;
+	private double giadien;
+	private int sodien;
+	private double gianuoc;
+	private int sonuoc;
+	private Room room;
+	private int tienphong;
+	private String thoigian;
+	private double tongtien;
+	Database db = Database.create();
+	public static final int GIADIEN = 2500;
+	public static final int GIANUOC = 4000;
+
+	public Bill() {
+
 	}
 
-	public Bill(int mahoadon, double giadien, int sodien, double gianuoc, int sonuoc, Room room, int tienphong, String thoigian, double tongtien) {
-        this.mahoadon = mahoadon;
-        this.giadien = giadien;
-        this.sodien = sodien;
-        this.gianuoc = gianuoc;
-        this.sonuoc = sonuoc;
-        this.room = room;
-        this.tienphong = tienphong;
-        this.thoigian = thoigian;
-        this.tongtien = tongtien;
-    }
+	public Bill(int mahoadon, double giadien, int sodien, double gianuoc,
+			int sonuoc, Room room, int tienphong, String thoigian,
+			double tongtien) {
+		this.mahoadon = mahoadon;
+		this.giadien = giadien;
+		this.sodien = sodien;
+		this.gianuoc = gianuoc;
+		this.sonuoc = sonuoc;
+		this.room = room;
+		this.tienphong = tienphong;
+		this.thoigian = thoigian;
+		this.tongtien = tongtien;
+	}
 
-	public int createBill(){
+	public int createBill() {
 		int leg = 0;
-		String command = "insert into hoadon value("+getID()+","+GIADIEN+","+sodien+","+GIANUOC+","+sonuoc+","+room.getMaphong()+","+room.getRoomRegion().getMakhu()+",'"+thoigian+"',"+tongtien()+",'chua')";
-		System.out.println(command);
+		String command;
 		try {
-			leg = db.update(command);
+			if (check() == false) {
+				command = "insert into hoadon value(" + getID() + "," + GIADIEN
+						+ "," + sodien + "," + GIANUOC + "," + sonuoc + ","
+						+ room.getMaphong() + ","
+						+ room.getRoomRegion().getMakhu() + ",'" + thoigian
+						+ "'," + tongtien() + ",'chua')";
+
+				leg = db.update(command);
+
+			} else {
+				return 0;
+			}
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return leg;
 	}
-	
-	public int getID(){
+
+	private boolean check() throws SQLException, ParseException {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = format.parse(thoigian);
+		System.out.println(thoigian);
+		String command = "select * from hoadon where maphong="
+				+ room.getMaphong() + " and makhu = "
+				+ room.getRoomRegion().getMakhu() + " and MONTH(thoigian) = "
+				+ (date.getMonth()+1);
+		System.out.println(command);
+		ResultSet rs = db.execute(command);
+		while (rs.next()) {
+			return true;
+		}
+		return false;
+	}
+
+	public int getID() {
 		int id = 0;
 		String command = "select max(mahoadon) as max from hoadon ";
 		ResultSet rs;
@@ -77,48 +108,57 @@ public class Bill {
 			while (rs.next()) {
 				id = rs.getInt("max");
 			}
-			return id+1;
+			return id + 1;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return id;
 	}
-	
-	public boolean outBill(){
+
+	public boolean outBill() {
 		int i = 0;
 		Date date = new Date();
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		String ngaytao = format.format(date);
-		String command = "select * from hoadon where maphong="+room.getMaphong()+" and makhu = "+room.getRoomRegion().getMakhu()+" and MONTH(thoigian) = "+thoigian;
-		
+		String command = "select * from hoadon where maphong="
+				+ room.getMaphong() + " and makhu = "
+				+ room.getRoomRegion().getMakhu() + " and MONTH(thoigian) = "
+				+ thoigian;
+		System.out.println(command);
 		try {
 			ResultSet rs = db.execute(command);
 			File dir = new File("C:/bill");
 			dir.mkdirs();
-			File file = new File("C:/bill/"+thoigian+room.getMaphong()+room.getRoomRegion().getMakhu()+".txt");
-			PrintWriter pw = new PrintWriter(file,"UTF-8");
+			File file = new File("C:/bill/" + thoigian + room.getMaphong()
+					+ room.getRoomRegion().getMakhu() + ".txt");
+			PrintWriter pw = new PrintWriter(file, "UTF-8");
 			while (rs.next()) {
 				i++;
-				pw.println("Hóa đơn tháng "+thoigian);
+				pw.println("Hóa đơn tháng " + thoigian);
 				pw.println("--");
-				pw.println("Ngày tạo "+ngaytao);
-				pw.println("Tổng số điện "+rs.getInt("sodien")+" kw");
-				pw.println("Giá điện "+rs.getInt("giadien")+" VND");
-				pw.println("Tổng số nước "+rs.getInt("sonuoc")+" khối");
-				pw.println("Giá nước "+rs.getInt("gianuoc")+" VND");
+				pw.println("Ngày tạo " + ngaytao);
+				pw.println("Tổng số điện " + rs.getInt("sodien") + " kw");
+				pw.println("Giá điện " + rs.getInt("giadien") + " VND");
+				pw.println("Tổng số nước " + rs.getInt("sonuoc") + " khối");
+				pw.println("Giá nước " + rs.getInt("gianuoc") + " VND");
 				pw.println("--");
-				pw.println("Tổng tiền "+rs.getInt("tongtien")+" VND");
+				pw.println("Tổng tiền " + rs.getInt("tongtien") + " VND");
 				pw.flush();
 			}
-			if(i == 0){
+			if (i == 0) {
 				pw.println("Tháng này hiện chưa tạo phiếu tính tiền!");
 				pw.flush();
-			}else{
-				command = "UPDATE hoadon SET thanhtoan = 'x' WHERE maphong ="+room.getMaphong()+" and makhu = "+room.getRoomRegion().getMakhu();
+			} else {
+				command = "UPDATE hoadon SET thanhtoan = 'x' WHERE maphong ="
+						+ room.getMaphong() + " and makhu = "
+						+ room.getRoomRegion().getMakhu()
+						+ " and MONTH(thoigian) = " + thoigian;
 				db.update(command);
 			}
-			Desktop.getDesktop().open(new File("C:/bill/"+thoigian+room.getMaphong()+room.getRoomRegion().getMakhu()+".txt"));
+			Desktop.getDesktop().open(
+					new File("C:/bill/" + thoigian + room.getMaphong()
+							+ room.getRoomRegion().getMakhu() + ".txt"));
 			pw.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -135,81 +175,81 @@ public class Bill {
 		}
 		return true;
 	}
-	
-	public int tongtien(){
-		return sodien*GIADIEN + sonuoc+GIANUOC;
+
+	public int tongtien() {
+		return sodien * GIADIEN + sonuoc + GIANUOC;
 	}
-    public int getMahoadon() {
-        return mahoadon;
-    }
 
-    public void setMahoadon(int mahoadon) {
-        this.mahoadon = mahoadon;
-    }
+	public int getMahoadon() {
+		return mahoadon;
+	}
 
-    public double getGiadien() {
-        return giadien;
-    }
+	public void setMahoadon(int mahoadon) {
+		this.mahoadon = mahoadon;
+	}
 
-    public void setGiadien(double giadien) {
-        this.giadien = giadien;
-    }
+	public double getGiadien() {
+		return giadien;
+	}
 
-    public int getSodien() {
-        return sodien;
-    }
+	public void setGiadien(double giadien) {
+		this.giadien = giadien;
+	}
 
-    public void setSodien(int sodien) {
-        this.sodien = sodien;
-    }
+	public int getSodien() {
+		return sodien;
+	}
 
-    public double getGianuoc() {
-        return gianuoc;
-    }
+	public void setSodien(int sodien) {
+		this.sodien = sodien;
+	}
 
-    public void setGianuoc(double gianuoc) {
-        this.gianuoc = gianuoc;
-    }
+	public double getGianuoc() {
+		return gianuoc;
+	}
 
-    public int getSonuoc() {
-        return sonuoc;
-    }
+	public void setGianuoc(double gianuoc) {
+		this.gianuoc = gianuoc;
+	}
 
-    public void setSonuoc(int sonuoc) {
-        this.sonuoc = sonuoc;
-    }
+	public int getSonuoc() {
+		return sonuoc;
+	}
 
-    public Room getRoom() {
-        return room;
-    }
+	public void setSonuoc(int sonuoc) {
+		this.sonuoc = sonuoc;
+	}
 
-    public void setRoom(Room room) {
-        this.room = room;
-    }
+	public Room getRoom() {
+		return room;
+	}
 
-    public int getTienphong() {
-        return tienphong;
-    }
+	public void setRoom(Room room) {
+		this.room = room;
+	}
 
-    public void setTienphong(int tienphong) {
-        this.tienphong = tienphong;
-    }
+	public int getTienphong() {
+		return tienphong;
+	}
 
-    public String getThoigian() {
-        return thoigian;
-    }
+	public void setTienphong(int tienphong) {
+		this.tienphong = tienphong;
+	}
 
-    public void setThoigian(String thoigian) {
-        this.thoigian = thoigian;
-    }
+	public String getThoigian() {
+		return thoigian;
+	}
 
-    public double getTongtien() {
-        return tongtien;
-    }
+	public void setThoigian(String thoigian) {
+		this.thoigian = thoigian;
+	}
 
-    public void setTongtien(double tongtien) {
-        this.tongtien = tongtien;
-    }
-    
-    
+	public double getTongtien() {
+		return tongtien;
+	}
+
+	public void setTongtien(double tongtien) {
+		this.tongtien = tongtien;
+	}
+
 }

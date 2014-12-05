@@ -43,6 +43,14 @@ public class AdminUser extends User{
 
     @Override
     public int doimatkhau() {
+    	String command = "UPDATE admin set matkhau = '"+password+"' where msnv = "+employee.getManv();
+    	System.out.println(command);
+    	try {
+			db.update(command);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return 0;
     }
     
