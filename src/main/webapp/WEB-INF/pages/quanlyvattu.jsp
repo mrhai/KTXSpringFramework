@@ -27,10 +27,10 @@
 				<tr>
 					<!-- 						Nhập vật tư -->
 					<td><input name="vt" type="radio" id="addvt"
-						onclick="vtcase()" hidden="true" checked="checked"></input></td>
+						onclick="vtcase()" hidden="true"></input></td>
 
 					<td><input type="radio" id="movevt" name="vt"
-						onclick="vtcase()">Chuyển vật tư đến phòng</input></td>
+						onclick="vtcase()" checked="checked">Chuyển vật tư đến phòng</input></td>
 					<td><input type="radio" id="repairvt" name="vt"
 						onclick="vtcase()">Sữa chưa</input></td>
 					<td><input type="radio" id="historyRepair" name="vt"
@@ -39,7 +39,9 @@
 						hỏng</input></td>
 				</tr>
 			</table>
-
+<center>
+				<font color="red"><p id = "message">${message}</p></font>
+			</center>
 			<form name="nhap" action="nhap.html" method="get">
 				<table id="nhap" width="100%" hidden="true">
 
@@ -66,7 +68,7 @@
 				</table>
 			</form>
 
-			<form name="move" action="chuyen.html" method="get">
+			<form name="move" action="chuyen.html" method="get" onsubmit="return moveValidate()">
 				<table id="move" width="100%" hidden="true">
 					<tr>
 						<td colspan="2" align="center" bgcolor="#0099FF"
@@ -106,7 +108,7 @@
 					</tr>
 				</table>
 			</form>
-			<form action="suachua.html" , method="get">
+			<form action="suachua.html" , method="get" name = "repair" onsubmit="return repairValidate()">
 				<table id="repair" width="100%" hidden="true">
 					<tr>
 						<td colspan="2" align="center" bgcolor="#0099FF"
@@ -155,7 +157,6 @@
 					<tr>
 						<td width="50%" align="right">Mã phòng</td>
 						<td width="50%"><select name="roomnum">
-								<option value="">---</option>
 								<c:forEach var="list" items="${roomnum}">
 									<option value="${list}">${list}</option>
 								</c:forEach>
@@ -164,7 +165,6 @@
 					<tr>
 						<td width="50%" align="right">Mã khu</td>
 						<td width="50%"><select name="roomregion">
-								<option value="">---</option>
 								<c:forEach var="list" items="${roomregion}">
 									<option value="${list.makhu}">${list.tenkhu}</option>
 								</c:forEach>
@@ -240,9 +240,7 @@
 				</c:forEach>
 			</table>
 
-			<center>
-				<font color="red">${message}</font>
-			</center>
+			
 
 		</div>
 	</div>

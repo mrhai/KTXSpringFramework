@@ -40,7 +40,6 @@
 					<tr>
 						<td width="50%" align="right">In theo</td>
 						<td width="50%"><select name="type">
-								<option>---</option>
 								<option value="dssv">DS sinh viên</option>
 								<option value="dsnhd">DS nợ hóa đơn</option>
 								<option value="ktkl">Khen thưởng/ Kỷ luật</option>
@@ -63,7 +62,6 @@
 					<tr>
 						<td width="50%" align="right">In theo</td>
 						<td width="50%"><select name="type">
-								<option>---</option>
 								<option value="ttnv">Thông tin nhân viên</option>
 								<option value="nvql">Nhân viên quản lý</option>
 						</select></td>
@@ -107,7 +105,6 @@
 					<tr>
 						<td align="right">In theo</td>
 						<td><select name="mode">
-						<option value="">---</option>
 								<option value="ds">Danh sách khách</option>
 						</select></td>
 					</tr>

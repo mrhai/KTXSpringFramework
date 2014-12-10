@@ -38,7 +38,10 @@
 						onclick="employeecase()">DS nhân viên quản lý</input></td>
 				</tr>
 			</table>
-			<form name="add" action="add.html" method="post">
+			<center>
+				<font color="red"><p id="message">${message}</p></font>
+			</center>
+			<form name="add" action="add.html" method="post" onsubmit="return addValidate()">
 				<input id="mvcSrc" name="mnvSrc" type="hidden" value="${manv}" />
 				<table id="addemptb" width="100%" hidden="true">
 					<tr>
@@ -77,7 +80,7 @@
 				</table>
 			</form>
 			<form name="delete" action="delete.html" method="post"
-				onsubmit="return confirm('Bạn có chắc không?')">
+				onsubmit="return deleteValidate()">
 				<table id="deleteemptb" width="100%" hidden="true">
 					<tr>
 						<td colspan="2" align="center" bgcolor="#0099FF"
@@ -128,7 +131,7 @@
 					</tr>
 				</table>
 			</form>
-			<form action="room.html" method="get">
+			<form action="room.html" method="get" name = "room" onsubmit="return roomValidate()">
 				<table id="room" width="100%" hidden="true">
 					<tr>
 						<td colspan="2" align="center" bgcolor="#0099FF"
@@ -167,24 +170,21 @@
 				</table>
 			</form>
 			<table id="listmanager" width="100%" hidden="true">
-			<tr>
-			<td class="titletable">Mã nhân viên</td>
-			<td class="titletable">Tên nhân viên</td>
-			<td class="titletable">Mã phòng</td>
-			<td class="titletable">Tên phòng</td>
-			</tr>
-			<c:forEach var="i" items="${listManager }">
-			<tr>
-			<td>${i.employee.manv }</td>
-			<td>${i.employee.tennv }</td>
-			<td>${i.maphong }</td>
-			<td>${i.roomRegion.makhu }</td>
-			</tr>
-			</c:forEach>
+				<tr>
+					<td class="titletable">Mã nhân viên</td>
+					<td class="titletable">Tên nhân viên</td>
+					<td class="titletable">Mã phòng</td>
+					<td class="titletable">Tên phòng</td>
+				</tr>
+				<c:forEach var="i" items="${listManager }">
+					<tr>
+						<td>${i.employee.manv }</td>
+						<td>${i.employee.tennv }</td>
+						<td>${i.maphong }</td>
+						<td>${i.roomRegion.makhu }</td>
+					</tr>
+				</c:forEach>
 			</table>
-			<center>
-				<font color="red">${message}</font>
-			</center>
 		</div>
 	</div>
 	<jsp:include page="components/footer.jsp" />

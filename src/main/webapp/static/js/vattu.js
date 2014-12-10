@@ -54,3 +54,15 @@ function load(){
     }
     vtcase();
 }
+
+function moveValidate(){
+	var sl = document.forms["move"]["sl"].value;
+	if(sl === ""){document.getElementById("message").innerHTML = "Xin nhập số lượng!";return false;}
+	if(isNaN(sl)){document.getElementById("message").innerHTML = "Xin nhập số lượng là số!";return false;}
+}
+
+function repairValidate(){
+	var price = document.forms["repair"]["gia"].value;
+	if(price === ""){document.getElementById("message").innerHTML = "Xin nhập giá sữa chữa!";return false;}
+	if(isNaN(price)){document.getElementById("message").innerHTML = "Xin nhập giá là số";return false;}
+}

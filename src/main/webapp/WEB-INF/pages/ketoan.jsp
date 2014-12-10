@@ -34,8 +34,10 @@
 
 				</tr>
 			</table>
-
-			<form action="bill.html" method="post">
+<center>
+				<font color="red"><p id = "message">${message }</p></font>
+			</center>
+			<form action="bill.html" method="post" name = "bill" onsubmit="return createValidate()">
 				<table width="100%" hidden="true" id="createtb">
 					<tr>
 						<td colspan="2" align="center" class="titletable">Tạo hóa đơn</td>
@@ -43,7 +45,6 @@
 					<tr>
 						<td width="50%" align="right">Mã phòng</td>
 						<td width="50%"><select name="roomnum">
-								<option value="">---</option>
 								<c:forEach var="list" items="${roomnum}">
 									<option value="${list}">${list}</option>
 								</c:forEach>
@@ -52,7 +53,6 @@
 					<tr>
 						<td width="50%" align="right">Mã khu</td>
 						<td width="50%"><select name="roomregion">
-								<option value="">---</option>
 								<c:forEach var="list" items="${roomregion}">
 									<option value="${list.makhu}">${list.tenkhu}</option>
 								</c:forEach>
@@ -98,7 +98,7 @@
 				</table>
 			</form>
 
-			<form action="out.html" method="get">
+			<form action="out.html" method="get" name = "out">
 				<table width="100%" hidden="true"  id="checkouttb">
 					<tr>
 						<td colspan="2" align="center" class="titletable">Xuất hóa
@@ -107,7 +107,6 @@
 					<tr>
 						<td width="50%" align="right">Mã phòng</td>
 						<td width="50%"><select name="roomnum">
-								<option value="">---</option>
 								<c:forEach var="list" items="${roomnum}">
 									<option value="${list}">${list}</option>
 								</c:forEach>
@@ -116,7 +115,6 @@
 					<tr>
 						<td width="50%" align="right">Mã khu</td>
 						<td width="50%"><select name="roomregion">
-								<option value="">---</option>
 								<c:forEach var="list" items="${roomregion}">
 									<option value="${list.makhu}">${list.tenkhu}</option>
 								</c:forEach>
@@ -125,7 +123,6 @@
 					<tr>
 						<td width="50%" align="right">Hóa đơn tháng</td>
 						<td width="50%"><select name="thang">
-								<option value="">---</option>
 								<c:forEach begin="1" end="12" var="i">
 									<option value="${i }">${i }</option>
 								</c:forEach>
@@ -137,9 +134,7 @@
 					</tr>
 				</table>
 			</form>
-			<center>
-				<font color="red">${message }</font>
-			</center>
+			
 		</div>
 	</div>
 	<jsp:include page="components/footer.jsp" />

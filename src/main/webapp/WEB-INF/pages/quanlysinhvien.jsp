@@ -24,10 +24,12 @@
 		<div id="title">Quản lý Sinh Viên</div>
 		<jsp:include page="components/adminnav.jsp" />
 		<div id="content">
+
 			<table>
 				<tr>
 					<td align="center"><input type="radio" id="add"
-						name="addorchange" onclick="addorchangeAction()" checked="checked" />Nhận sinh viên</td>
+						name="addorchange" onclick="addorchangeAction()" checked="checked" />Nhận
+						sinh viên</td>
 					<td align="center"><input type="radio" id="delete"
 						name="addorchange" onclick="addorchangeAction()" />Xóa thông tin
 						sinh viên</td>
@@ -44,7 +46,11 @@
 						Kỉ luật</td>
 				</tr>
 			</table>
-			<form action="add.html" method="post" ENCTYPE='multipart/form-data'>
+			<center>
+				<font color="red"><p id="message">${message}</p></font>
+			</center>
+			<form action="add.html" method="post" ENCTYPE='multipart/form-data'
+				name="add" onsubmit="return addValidate()">
 				<table id="addsv" width="100%" hidden="true">
 					<tr>
 						<td colspan="2" align="center" bgcolor="#0099FF"
@@ -53,11 +59,11 @@
 
 					<tr>
 
-						<td align="right">Mã số Sinh Viên</td>
+						<td align="right" width="45%">Mã số Sinh Viên</td>
 						<td><input id="mssv" type="text" name="mssv" /></td>
 					</tr>
 					<tr>
-						<td align="right">Mã phòng</td>
+						<td align="right" width="45%">Mã phòng</td>
 						<td><select name="roomnum">
 								<c:forEach var="list" items="${roomnum}">
 									<option value="${list}">${list}</option>
@@ -65,7 +71,7 @@
 						</select></td>
 					</tr>
 					<tr>
-						<td align="right">Mã khu</td>
+						<td align="right" width="45%">Mã khu</td>
 						<td><select name="roomregion">
 								<c:forEach var="list" items="${roomregion}">
 									<option value="${list.makhu}">${list.tenkhu}</option>
@@ -73,44 +79,42 @@
 						</select></td>
 					</tr>
 					<tr>
-						<td align="right">Tên Sinh Viên</td>
+						<td align="right" width="45%">Tên Sinh Viên</td>
 						<td><input type="text" name="tensv" /></td>
 					</tr>
 					<tr>
-						<td align="right">Ngày sinh</td>
+						<td align="right" width="45%">Ngày sinh</td>
 						<td><input type="text" name="ngaysinh" /></td>
 					</tr>
 					<tr>
-						<td align="right">Quê quán</td>
+						<td align="right" width="45%">Quê quán</td>
 						<td><input type="text" name="que" /></td>
 					</tr>
 					<tr>
-						<td align="right">Lớp</td>
+						<td align="right" width="45%">Lớp</td>
 						<td><input type="text" name="lop" /></td>
 					</tr>
 					<tr>
-						<td align="right">Khoa</td>
-						<td>
-						<select name="khoa">
-							<option value="CNTT">Công nghệ thông tin</option>
-							<option value="KT">Kinh tế</option>
-							<option value="TS">Thủy sản</option>
-							<option value="MT">Môi trường</option>
-							<option value="NT">Nông học</option>
-						</select>
-						</td>
+						<td align="right" width="45%">Khoa</td>
+						<td><select name="khoa" width="45%">
+								<option value="CNTT">Công nghệ thông tin</option>
+								<option value="KT">Kinh tế</option>
+								<option value="TS">Thủy sản</option>
+								<option value="MT">Môi trường</option>
+								<option value="NT">Nông học</option>
+						</select></td>
 					<tr />
 					<tr>
-						<td align="right">Số điện thoại</td>
+						<td align="right" width="45%">Số điện thoại</td>
 						<td><input type="text" name="sdt" /></td>
 					</tr>
 
 					<tr>
-						<td align="right">Ngày đi</td>
+						<td align="right" width="45%">Ngày đi</td>
 						<td><input type="text" name="ngaydi" /></td>
 					</tr>
 					<tr>
-						<td align="right">Hình đại diện</td>
+						<td align="right" width="45%">Hình đại diện</td>
 						<td><input type="file" name="file" /></td>
 					</tr>
 					<tr>
@@ -122,7 +126,7 @@
 				</table>
 			</form>
 			<form name="delete" method="post" action="deletesv.html"
-				onsubmit="return confirm('Xác nhận xóa?')">
+				onsubmit="return deleteValidate()">
 				<table id="deletesv" width="100%" hidden="true">
 					<tr>
 						<td colspan="2" align="center" bgcolor="#0099FF"
@@ -151,7 +155,7 @@
 				</table>
 			</form>
 			<form name="changeroom" method="post" action="changeroom.html"
-				onsubmit="return confirm('Xác nhận thay đổi phòng?')">
+				onsubmit="return changeValidate()">
 				<table id="changeroom" width="100%" hidden="true">
 					<tr>
 						<td colspan="2" align="center" bgcolor="#0099FF"
@@ -196,7 +200,7 @@
 			</form>
 
 			<table width="100%" id="list" hidden="true">
-				<form action="find.html" method="get">
+				<form name="find" action="find.html" method="get">
 
 					<tr>
 						<td colspan="3" class="titletable" align="center">Tìm kiếm</td>
@@ -246,9 +250,10 @@
 
 				</c:forEach>
 			</table>
-			<form action="ktkl.html" method="post">
-			<table id="khen" width="100%" hidden="true">
-				<tr>
+			<form action="ktkl.html" method="post" name="ktkl"
+				onsubmit="return ktklValidate()">
+				<table id="khen" width="100%" hidden="true">
+					<tr>
 						<td colspan="2" align="center" bgcolor="#0099FF"
 							class="titletable">Khen thưởng/ Kỉ luật</td>
 					</tr>
@@ -258,93 +263,87 @@
 								<option value="">---</option>
 								<option value="khen">Khen thưởng</option>
 								<option value="kl">Kỉ luật</option>
-								
+
 						</select></td>
 					</tr>
-					
+
 					<tr>
 						<td width="45%" align="right">Mã sinh viên</td>
-						<td width="55%">
-						<input type="text" name="mssv"></input>
-						</td>
+						<td width="55%"><input type="text" name="mssv"></input></td>
 					</tr>
 					<tr valign="top">
 						<td width="45%" align="right">Nội dung</td>
-						<td width="55%">
-						<textarea rows="5" cols="30" name="nd"></textarea>
+						<td width="55%"><textarea rows="5" cols="30" name="nd"></textarea>
 						</td>
 					</tr>
-				
+
 					<tr>
 						<td colspan="2" align="center"><input type="submit"
 							value="Lưu" /></td>
 					</tr>
-					</table>
-					</form>
-					<form action="timktkl" method="get">
-					<table id="timktkl" width = "100%" hidden="true">
+				</table>
+			</form>
+			<form action="timktkl" method="get">
+				<table id="timktkl" width="100%" hidden="true">
 					<tr>
 						<td colspan="2" align="center" bgcolor="#0099FF"
 							class="titletable">Danh sách kỉ luật khen thưởng</td>
 					</tr>
-					
+
 					<tr>
 						<td width="45%" align="right">Mã sinh viên</td>
-						<td width="55%">
-						<input type="text" name="mssv"></input>
-						</td>
+						<td width="55%"><input type="text" name="mssv"></input></td>
 					</tr>
-					
+
 					<tr>
-						<td colspan="2" align="center"><input type="submit" value="Tìm"/></td>
+						<td colspan="2" align="center"><input type="submit"
+							value="Tìm" /></td>
 					</tr>
-					
+
 				</table>
-				</form>
-				<table id="listktkl" width="100%" hidden="true">
+			</form>
+			<table id="listktkl" width="100%" hidden="true">
 				<tr>
-					<td width="20%" align="center" class="titletable">Mã số sinh viên</td>
-					<td width="20%" align="center" class="titletable">Khen thưởng/ Kỉ luật</td>
+					<td width="20%" align="center" class="titletable">Mã số sinh
+						viên</td>
+					<td width="20%" align="center" class="titletable">Khen thưởng/
+						Kỉ luật</td>
 					<td width="60%" align="center" class="titletable">Nội dung</td>
-					</tr>
-					<c:forEach var = "ktkl" items="${listktkl }">
+				</tr>
+				<c:forEach var="ktkl" items="${listktkl }">
 					<tr>
-					<td align="center">${ktkl.mssv }</td>
-					<td align="center">
-					<c:choose>
-					<c:when test="${ktkl.mode == 'kt'}">Khen thưởng</c:when>
-					<c:when test="${ktkl.mode == 'kl'}">Kỉ luật</c:when>
-					</c:choose>
-					</td>
-					<td align="left">${ktkl.noidung }</td>
+						<td align="center">${ktkl.mssv }</td>
+						<td align="center"><c:choose>
+								<c:when test="${ktkl.mode == 'kt'}">Khen thưởng</c:when>
+								<c:when test="${ktkl.mode == 'kl'}">Kỉ luật</c:when>
+							</c:choose></td>
+						<td align="left">${ktkl.noidung }</td>
 					</tr>
-					</c:forEach>
-				</table>
-				
+				</c:forEach>
 			</table>
-			
-			<table id="bill" width = "100%" hidden="true">
+
+			</table>
+
+			<table id="bill" width="100%" hidden="true">
 				<tr>
 					<td class="titletable" align="center">Mã sinh viên</td>
 					<td class="titletable" align="center">Mã phòng</td>
 					<td class="titletable" align="center">Mã khu</td>
 					<td class="titletable" align="center">Tiền còn thiếu (VND)</td>
 				</tr>
-				
-					<c:forEach var="student" items="${bill }">
+
+				<c:forEach var="student" items="${bill }">
 					<tr>
-					<td align="center">${ student.mssv}</td>
-					<td align="center">${ student.room.maphong}</td>
-					<td align="center">${ student.room.roomRegion.makhu}</td>
-					<td align="center">${ student.tienthieu}</td>
+						<td align="center">${ student.mssv}</td>
+						<td align="center">${ student.room.maphong}</td>
+						<td align="center">${ student.room.roomRegion.makhu}</td>
+						<td align="center">${ student.tienthieu}</td>
 					</tr>
-					</c:forEach>
-				
+				</c:forEach>
+
 			</table>
 
-			<center>
-				<font color="red">${message}</font>
-			</center>
+
 		</div>
 	</div>
 	<jsp:include page="components/footer.jsp" />
