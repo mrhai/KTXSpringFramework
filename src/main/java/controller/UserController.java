@@ -24,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -58,11 +59,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/xulidangnhap", method = RequestMethod.POST)
-	public String welcome(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ServletException {
+	public String welcome(HttpServletRequest request,@RequestParam(value = "username") int username,@RequestParam(value = "password") String password) throws IOException, ServletException {
 		HttpSession session = request.getSession();
-		int username = Integer.parseInt(request.getParameter("username"));
-		String password = request.getParameter("password");
+//		int username = Integer.parseInt(request.getParameter("username"));
+//		String password = request.getParameter("password");
 
 		Employee employee = new Employee();
 		employee.setManv(username);
@@ -71,7 +71,7 @@ public class UserController {
 		if (user.login() != 0) {
 			session.setAttribute("username", username);
 			session.setAttribute("actor", "admin");
-			return "adminpage";
+			return "quanlysinhvien";
 		} else {
 			// student
 			Student student = new Student();
@@ -80,7 +80,6 @@ public class UserController {
 			if (user.login() != 0) {
 				session.setAttribute("username", username);
 				session.setAttribute("actor", "sv");
-				
 				request.setAttribute("list", student.getStudentRoom());
 				return "sinhvien";
 			} else {

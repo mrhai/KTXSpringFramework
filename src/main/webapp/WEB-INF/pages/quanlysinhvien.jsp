@@ -21,31 +21,32 @@
 	<jsp:include page="components/information.jsp" />
 	<jsp:include page="components/banner.jsp" />
 	<div id="center">
-		<div id="title">Quản lý Sinh Viên</div>
+		<div id="title" >Quản lý Sinh Viên</div>
 		<jsp:include page="components/adminnav.jsp" />
 		<div id="content">
+			<div id="tool">
+				<table>
+					<tr>
+						<td align="center"><input type="radio" id="add"
+							name="addorchange" onclick="addorchangeAction()"
+							checked="checked"><label for="add">Nhận sinh viên</label></td>
+						<td align="center"><input type="radio" id="delete"
+							name="addorchange" onclick="addorchangeAction()" ><label for="delete">Xóa thông tin
+							sinh viên</label></td>
+						<td align="center"><input type="radio" id="change"
+							name="addorchange" onclick="addorchangeAction()" ><label for="change">Đổi phòng</label></td>
 
-			<table>
-				<tr>
-					<td align="center"><input type="radio" id="add"
-						name="addorchange" onclick="addorchangeAction()" checked="checked" />Nhận
-						sinh viên</td>
-					<td align="center"><input type="radio" id="delete"
-						name="addorchange" onclick="addorchangeAction()" />Xóa thông tin
-						sinh viên</td>
-					<td align="center"><input type="radio" id="change"
-						name="addorchange" onclick="addorchangeAction()" />Đổi phòng</td>
-
-					<td align="center"><input type="radio" id="studenlist"
-						name="addorchange" onclick="addorchangeAction()" />Hồ sơ lưu trú
-						viên</td>
-					<td align="center"><input type="radio" id="arrears"
-						name="addorchange" onclick="addorchangeAction()" />Nợ hóa đơn</td>
-					<td align="center"><input type="radio" id="khenthuong"
-						name="addorchange" onclick="addorchangeAction()" />Khen thưởng/
-						Kỉ luật</td>
-				</tr>
-			</table>
+						<td align="center"><input type="radio" id="studenlist"
+							name="addorchange" onclick="addorchangeAction()" ><label for="studenlist">Hồ sơ lưu trú
+							viên</label></td>
+						<td align="center"><input type="radio" id="arrears"
+							name="addorchange" onclick="addorchangeAction()" ><label for="arrears">Nợ hóa đơn</label></td>
+						<td align="center"><input type="radio" id="khenthuong"
+							name="addorchange" onclick="addorchangeAction()" ><label for="khenthuong">Khen thưởng/
+							Kỉ luật</label></td>
+					</tr>
+				</table>
+			</div>
 			<center>
 				<font color="red"><p id="message">${message}</p></font>
 			</center>
@@ -60,11 +61,11 @@
 					<tr>
 
 						<td align="right" width="45%">Mã số Sinh Viên</td>
-						<td><input id="mssv" type="text" name="mssv" /></td>
+						<td><input id="mssv" type="text" name="mssv" class="submit" /></td>
 					</tr>
 					<tr>
 						<td align="right" width="45%">Mã phòng</td>
-						<td><select name="roomnum">
+						<td><select name="roomnum" class="submit" >
 								<c:forEach var="list" items="${roomnum}">
 									<option value="${list}">${list}</option>
 								</c:forEach>
@@ -72,7 +73,7 @@
 					</tr>
 					<tr>
 						<td align="right" width="45%">Mã khu</td>
-						<td><select name="roomregion">
+						<td><select name="roomregion" class="submit">
 								<c:forEach var="list" items="${roomregion}">
 									<option value="${list.makhu}">${list.tenkhu}</option>
 								</c:forEach>
@@ -80,23 +81,23 @@
 					</tr>
 					<tr>
 						<td align="right" width="45%">Tên Sinh Viên</td>
-						<td><input type="text" name="tensv" /></td>
+						<td><input type="text" name="tensv" class="submit" /></td>
 					</tr>
 					<tr>
 						<td align="right" width="45%">Ngày sinh</td>
-						<td><input type="text" name="ngaysinh" /></td>
+						<td><input type="text" name="ngaysinh" class="submit" /></td>
 					</tr>
 					<tr>
 						<td align="right" width="45%">Quê quán</td>
-						<td><input type="text" name="que" /></td>
+						<td><input type="text" name="que" class="submit" /></td>
 					</tr>
 					<tr>
 						<td align="right" width="45%">Lớp</td>
-						<td><input type="text" name="lop" /></td>
+						<td><input type="text" name="lop" class="submit" /></td>
 					</tr>
 					<tr>
 						<td align="right" width="45%">Khoa</td>
-						<td><select name="khoa" width="45%">
+						<td><select name="khoa" width="45%" class="submit">
 								<option value="CNTT">Công nghệ thông tin</option>
 								<option value="KT">Kinh tế</option>
 								<option value="TS">Thủy sản</option>
@@ -106,19 +107,19 @@
 					<tr />
 					<tr>
 						<td align="right" width="45%">Số điện thoại</td>
-						<td><input type="text" name="sdt" /></td>
+						<td><input type="text" name="sdt" class="submit"/></td>
 					</tr>
 
 					<tr>
 						<td align="right" width="45%">Ngày đi</td>
-						<td><input type="text" name="ngaydi" /></td>
+						<td><input type="text" name="ngaydi" class="submit" /></td>
 					</tr>
 					<tr>
 						<td align="right" width="45%">Hình đại diện</td>
-						<td><input type="file" name="file" /></td>
+						<td><input type="file" name="file"  /></td>
 					</tr>
 					<tr>
-						<td colspan="2" align="center"><input type="submit"
+						<td colspan="2" align="center"><input type="submit" class="submit"
 							value="Ghi thông tin" /></td>
 
 					</tr>
@@ -134,7 +135,7 @@
 					</tr>
 					<tr>
 						<td width="50%" align="right">Chọn Sinh viên</td>
-						<td width="50%"><select id="mssv" name="mssv"
+						<td width="50%"><select id="mssv" name="mssv" class="submit"
 							onchange="selectSV()">
 								<option value="">---</option>
 								<c:forEach var="sv" items="${mssv}">
@@ -146,10 +147,10 @@
 
 					<tr>
 						<td align="right">Sinh viên</td>
-						<td><input id="mssvdelete" name="mssvdelete" /></td>
+						<td><input id="mssvdelete" name="mssvdelete" class="submit" /></td>
 					</tr>
 					<tr>
-						<td colspan="2" align="center"><input type="submit"
+						<td colspan="2" align="center"><input type="submit" class="submit"
 							value="Xóa" /></td>
 					</tr>
 				</table>
@@ -163,7 +164,7 @@
 					</tr>
 					<tr>
 						<td width="50%" align="right">Chọn Sinh Viên</td>
-						<td width="50%"><select name="mssv" onchange="selectSV()">
+						<td width="50%"><select name="mssv" onchange="selectSV()" class="submit">
 								<option value="">---</option>
 								<c:forEach var="sv" items="${mssv}">
 									<option value="${sv}">${sv}</option>
@@ -172,11 +173,11 @@
 					</tr>
 					<tr>
 						<td width="50%" align="right">Sinh viên</td>
-						<td width="50%"><input type="text" name="mssvchang" /></td>
+						<td width="50%"><input type="text" name="mssvchang" class="submit"/></td>
 					</tr>
 					<tr>
 						<td align="right">Chọn phòng</td>
-						<td><select name="roomchang">
+						<td><select name="roomchang" class="submit">
 								<c:forEach var="list" items="${roomnum}">
 									<option value="${list}">${list}</option>
 								</c:forEach>
@@ -186,14 +187,14 @@
 
 					<tr>
 						<td align="right">Chọn khu</td>
-						<td><select name="regionchang">
+						<td><select name="regionchang" class="submit">
 								<c:forEach var="list" items="${roomregion}">
 									<option value="${list.makhu}">${list.tenkhu}</option>
 								</c:forEach>
 						</select></td>
 					</tr>
 					<tr>
-						<td colspan="2" align="center"><input type="submit"
+						<td colspan="2" align="center"><input type="submit" class="submit"
 							value="Thay đổi" /></td>
 					</tr>
 				</table>
@@ -207,11 +208,11 @@
 					</tr>
 					<tr>
 						<td align="right" width="45%">Mã sinh viên</td>
-						<td><input type="text" name="mssv"></input></td>
+						<td><input type="text" name="mssv" class="submit"></input></td>
 						<td></td>
 					</tr>
 					<tr>
-						<td colspan="3" align="center"><input type="submit"
+						<td colspan="3" align="center"><input type="submit" class="submit"
 							value="Tìm"></input></td>
 					</tr>
 
@@ -259,7 +260,7 @@
 					</tr>
 					<tr>
 						<td width="45%" align="right">Chọn mục</td>
-						<td width="55%"><select name="mode">
+						<td width="55%"><select name="mode" class="submit">
 								<option value="">---</option>
 								<option value="khen">Khen thưởng</option>
 								<option value="kl">Kỉ luật</option>
@@ -269,16 +270,16 @@
 
 					<tr>
 						<td width="45%" align="right">Mã sinh viên</td>
-						<td width="55%"><input type="text" name="mssv"></input></td>
+						<td width="55%"><input type="text" name="mssv" class="submit"></input></td>
 					</tr>
 					<tr valign="top">
 						<td width="45%" align="right">Nội dung</td>
-						<td width="55%"><textarea rows="5" cols="30" name="nd"></textarea>
+						<td width="55%"><textarea rows="5" cols="30" name="nd" class="submit"></textarea>
 						</td>
 					</tr>
 
 					<tr>
-						<td colspan="2" align="center"><input type="submit"
+						<td colspan="2" align="center"><input type="submit" class="submit"
 							value="Lưu" /></td>
 					</tr>
 				</table>
@@ -292,11 +293,11 @@
 
 					<tr>
 						<td width="45%" align="right">Mã sinh viên</td>
-						<td width="55%"><input type="text" name="mssv"></input></td>
+						<td width="55%"><input type="text" name="mssv" class="submit"></input></td>
 					</tr>
 
 					<tr>
-						<td colspan="2" align="center"><input type="submit"
+						<td colspan="2" align="center"><input type="submit" class="submit"
 							value="Tìm" /></td>
 					</tr>
 

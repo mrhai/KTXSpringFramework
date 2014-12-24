@@ -24,24 +24,27 @@
 		<div id="title">Quản lý Nhân Viên</div>
 		<jsp:include page="components/adminnav.jsp" />
 		<div id="content">
-			<table>
-				<tr>
-					<td><input type="radio" id="addemployee" name="employee"
-						onclick="employeecase()" checked="checked">Nhận nhân viên</input></td>
-					<td><input type="radio" id="deleteemployee" name="employee"
-						onclick="employeecase()">Xóa nhân viên</input></td>
-					<td><input type="radio" id="changesalary" name="employee"
-						onclick="employeecase()">Lương</input></td>
-					<td><input type="radio" id="employee" name="employee"
-						onclick="employeecase()">Cán bộ quản lý phòng</input></td>
-					<td><input type="radio" id="employeelist" name="employee"
-						onclick="employeecase()">DS nhân viên quản lý</input></td>
-				</tr>
-			</table>
+			<div id="tool">
+				<table>
+					<tr>
+						<td><input type="radio" id="addemployee" name="employee"
+							onclick="employeecase()" checked="checked"><label for="addemployee">Nhận nhân viên</label></td>
+						<td><input type="radio" id="deleteemployee" name="employee"
+							onclick="employeecase()"><label for="deleteemployee">Xóa nhân viên</label></td>
+						<td><input type="radio" id="changesalary" name="employee"
+							onclick="employeecase()"><label for="changesalary">Lương</label></td>
+						<td><input type="radio" id="employee" name="employee"
+							onclick="employeecase()"><label for="employee">Cán bộ quản lý phòng</label></td>
+						<td><input type="radio" id="employeelist" name="employee"
+							onclick="employeecase()"><label for="employeelist">DS nhân viên quản lý</label></td>
+					</tr>
+				</table>
+			</div>
 			<center>
 				<font color="red"><p id="message">${message}</p></font>
 			</center>
-			<form name="add" action="add.html" method="post" onsubmit="return addValidate()">
+			<form name="add" action="add.html" method="post"
+				onsubmit="return addValidate()">
 				<input id="mvcSrc" name="mnvSrc" type="hidden" value="${manv}" />
 				<table id="addemptb" width="100%" hidden="true">
 					<tr>
@@ -49,24 +52,24 @@
 							class="titletable">Thông tin nhân viên</td>
 					</tr>
 					<tr>
-						<td width="51%" align="right">Mã nhân viên</td>
-						<td width="49%"><input id="mnv" type="text" name="mnv" /></td>
+						<td width="45%" align="right">Mã nhân viên</td>
+						<td><input id="mnv" type="text" name="mnv" class="submit"/></td>
 					</tr>
 					<tr>
 						<td align="right">Tên nhân viên</td>
-						<td><input type="text" name="tennv" /></td>
+						<td><input type="text" name="tennv" class="submit"/></td>
 					</tr>
 					<tr>
 						<td align="right">Ngay sinh</td>
-						<td><input type="text" name="ngaysinh" /></td>
+						<td><input type="text" name="ngaysinh" class="submit" /></td>
 					</tr>
 					<tr>
 						<td align="right">diachi</td>
-						<td><input type="text" name="diachi" /></td>
+						<td><input type="text" name="diachi" class="submit"/></td>
 					</tr>
 					<tr>
 						<td align="right">chức vụ</td>
-						<td><select name="chucvu">
+						<td><select name="chucvu" class="submit">
 								<c:forEach var="cv" items="${chucvu}">
 									<option value="${cv.ma}">${cv.ten}</option>
 								</c:forEach>
@@ -74,7 +77,7 @@
 					</tr>
 
 					<tr>
-						<td colspan="2" align="center"><input type="submit"
+						<td colspan="2" align="center"><input type="submit" class="submit"
 							value="Thêm" /></td>
 					</tr>
 				</table>
@@ -87,13 +90,13 @@
 							class="titletable">Xóa nhân viên</td>
 					</tr>
 					<tr>
-						<td width="51%" align="right">Mã nhân viên</td>
-						<td width="49%"><input type="text" name="mnv" /></td>
+						<td width="45%" align="right">Mã nhân viên</td>
+						<td><input type="text" name="mnv" class="submit"/></td>
 					</tr>
 
 					<tr>
-						<td width="51%" align="right">Chọn nhanh</td>
-						<td width="49%"><select name="smnv" onchange="select()">
+						<td align="right">Chọn nhanh</td>
+						<td><select name="smnv" onchange="select()" class="submit">
 								<option value="">---</option>
 								<c:forEach var="mnv" items="${mnv}">
 									<option value="${mnv.manv}">${mnv.manv}-${mnv.tennv}</option>
@@ -101,7 +104,7 @@
 						</select></td>
 					</tr>
 					<tr>
-						<td colspan="2" align="center"><input type="submit"
+						<td colspan="2" align="center"><input type="submit" class="submit"
 							value="Xóa" /></td>
 					</tr>
 				</table>
@@ -113,8 +116,8 @@
 							class="titletable">Thay đổi lương</td>
 					</tr>
 					<tr>
-						<td width="51%" align="right">Chọn nhân viên</td>
-						<td width="49%"><select name="mnv">
+						<td width="45%" align="right">Chọn nhân viên</td>
+						<td><select name="mnv" class="submit">
 								<option value="">---</option>
 								<c:forEach var="mnv" items="${mnv}">
 									<option value="${mnv.manv}">${mnv.manv}-${mnv.tennv}</option>
@@ -123,15 +126,16 @@
 					</tr>
 					<tr>
 						<td align="right">Nhập lương</td>
-						<td><input type="text" name="luong" /></td>
+						<td><input type="text" name="luong" class="submit"/></td>
 					</tr>
 					<tr>
-						<td colspan="2" align="center"><input type="submit"
+						<td colspan="2" align="center"><input type="submit" class="submit"
 							value="Thay đổi" /></td>
 					</tr>
 				</table>
 			</form>
-			<form action="room.html" method="get" name = "room" onsubmit="return roomValidate()">
+			<form action="room.html" method="get" name="room"
+				onsubmit="return roomValidate()">
 				<table id="room" width="100%" hidden="true">
 					<tr>
 						<td colspan="2" align="center" bgcolor="#0099FF"
@@ -139,24 +143,24 @@
 					</tr>
 
 					<tr>
-						<td width="50%" align="right">Mã phòng</td>
-						<td width="50%"><select name="roomnum">
+						<td width="45%" align="right">Mã phòng</td>
+						<td><select name="roomnum" class="submit">
 								<c:forEach var="list" items="${roomnum}">
 									<option value="${list}">${list}</option>
 								</c:forEach>
 						</select></td>
 					</tr>
 					<tr>
-						<td width="50%" align="right">Mã khu</td>
-						<td width="50%"><select name="roomregion">
+						<td align="right">Mã khu</td>
+						<td><select name="roomregion" class="submit">
 								<c:forEach var="list" items="${roomregion}">
 									<option value="${list.makhu}">${list.tenkhu}</option>
 								</c:forEach>
 						</select></td>
 					</tr>
 					<tr>
-						<td width="50%" align="right">Nhân viên</td>
-						<td width="50%"><select name="mnv">
+						<td width="45%" align="right">Nhân viên</td>
+						<td><select name="mnv" class="submit">
 								<option value="">---</option>
 								<c:forEach var="mnv" items="${mnv}">
 									<option value="${mnv.manv}">${mnv.manv}-${mnv.tennv}</option>
@@ -164,7 +168,7 @@
 						</select></td>
 					</tr>
 					<tr>
-						<td colspan="2" align="center"><input type="submit"
+						<td colspan="2" align="center"><input type="submit" class="submit"
 							value="Thay đổi" /></td>
 					</tr>
 				</table>

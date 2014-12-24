@@ -25,12 +25,19 @@ public class GuestController {
 
     @RequestMapping(value = "/guestmanager", method = RequestMethod.GET)
     public String guestManager(HttpServletRequest request) {
-        User user = new GeneralUser();
-        if (user.checkSession(request.getSession())) {
+    	User user = new GeneralUser();
+		if (user.checkSession(request.getSession())) {
+			if (user.getActor(request.getSession(), "admin")) {
              request.setAttribute("mssv", new Student().getMSSV());
               request.setAttribute("makhach", new Guest().getMaKhach());
                request.setAttribute("listGuest", new Guest().getListKhach());
             return "quanlykhach";
+        } else {
+			request.setAttribute("message",
+					"Bạn không có quyền truy cập vào mục vừa rồi!");
+			user.logout(request.getSession());
+			return "dangnhap";
+		}
         } else {
             request.setAttribute("message", "Vui lòng đăng nhập!!");
             return "dangnhap";

@@ -23,21 +23,24 @@
 		<div id="title">Quản lý Khách</div>
 		<jsp:include page="components/adminnav.jsp" />
 		<div id="content">
-			<table>
-				<tr>
-					<td><input name="guest" type="radio" id="addguest"
-						onclick="guestcase()" checked="checked">Ghi nhận thông tin
-						khách</input></td>
-					<td><input type="radio" id="checkguest" name="guest"
-						onclick="guestcase()">Danh sách khách</input></td>
-					<td><input type="radio" id="deleteguest" name="guest"
-						onclick="guestcase()">Xóa thông tin khách</input></td>
-				</tr>
-			</table>
+			<div id="tool">
+				<table>
+					<tr>
+						<td><input name="guest" type="radio" id="addguest"
+							onclick="guestcase()" checked="checked"><label for="addguest">Ghi nhận thông
+							tin khách</label></td>
+						<td><input type="radio" id="checkguest" name="guest"
+							onclick="guestcase()"><label for="checkguest">Danh sách khách</label></td>
+						<td><input type="radio" id="deleteguest" name="guest"
+							onclick="guestcase()"><label for="deleteguest">Xóa thông tin khách</label></td>
+					</tr>
+				</table>
+			</div>
 			<center>
 				<font color="red"><p id="message">${message}</p></font>
 			</center>
-			<form name="addguesttb" action="add.html" method="post" onsubmit="return addValidate()">
+			<form name="addguesttb" action="add.html" method="post"
+				onsubmit="return addValidate()">
 				<table id="addguesttb" width="100%" hidden="true">
 					<input id="mvcSrc" name="mnvSrc" type="hidden" value="${makhach}" />
 					<tr>
@@ -45,32 +48,32 @@
 							class="titletable">Ghi nhận thông tin khách ở</td>
 					</tr>
 					<tr>
-						<td width="50%" align="right">Mã khách</td>
-						<td width="50%"><input type="text" name="makhach" /></td>
+						<td width="45%" align="right">Mã khách</td>
+						<td><input type="text" name="makhach" class="submit"/></td>
 					</tr>
 					<tr>
 						<td align="right">Tên khách</td>
-						<td><input type="text" name="tenkhach" /></td>
+						<td><input type="text" name="tenkhach" class="submit"/></td>
 					</tr>
 					<tr>
 						<td align="right">Số CMND</td>
-						<td><input type="text" name="cmnd" /></td>
+						<td><input type="text" name="cmnd" class="submit"/></td>
 					</tr>
 					<tr>
 						<td align="right">Ngày ở</td>
-						<td><input type="text" name="ngayo" /></td>
+						<td><input type="text" name="ngayo" class="submit"/></td>
 					</tr>
 					<tr>
 						<td align="right">Ngày đi</td>
-						<td><input type="text" name="ngaydi" /></td>
+						<td><input type="text" name="ngaydi" class="submit"/></td>
 					</tr>
 					<tr>
 						<td align="right">MSSV xác nhận</td>
-						<td><input type="text" name="mssv" /></td>
+						<td><input type="text" name="mssv" class="submit"/></td>
 					</tr>
 					<tr>
 						<td align="right">Chọn nhanh</td>
-						<td><select id="selectmssv" name="selectmssv" onchange="SV()">
+						<td><select id="selectmssv" name="selectmssv" onchange="SV()" class="submit">
 								<option value="">---</option>
 								<c:forEach var="sv" items="${mssv}">
 									<option value="${sv}">${sv}</option>
@@ -81,7 +84,7 @@
 
 
 					<tr>
-						<td colspan="2" align="center"><input type="submit"
+						<td colspan="2" align="center"><input type="submit" class="submit"
 							value="Thêm" /></td>
 					</tr>
 				</table>
@@ -95,8 +98,8 @@
 					</tr>
 
 					<tr>
-						<td width="50%" align="right">Chọn SV</td>
-						<td width="50%"><select id="mssvview" name="mssvview"
+						<td width="45%" align="right">Chọn SV</td>
+						<td><select id="mssvview" name="mssvview" class="submit"
 							onchange="SV()">
 								<option value="">Tất cả</option>
 								<c:forEach var="sv" items="${mssv}">
@@ -106,10 +109,10 @@
 					</tr>
 					<tr>
 						<td align="right">Mã SV</td>
-						<td><input type="text" name="mssv" /></td>
+						<td><input type="text" name="mssv" class="submit"/></td>
 					</tr>
 					<tr>
-						<td colspan="2" align="center"><input type="submit"
+						<td colspan="2" align="center"><input type="submit" class="submit"
 							value="Xem" /></td>
 					</tr>
 				</table>
@@ -124,21 +127,21 @@
 					<tr>
 					<tr>
 						<td align="right">Xóa theo</td>
-						<td><select id="type" name="type" onchange="SV()">
+						<td><select id="type" name="type" onchange="SV()" class="submit">
 								<option value="leave">Khách đã đi</option>
 								<option value="only">Từng khách một</option>
 						</select></td>
 					</tr>
 
 					<tr>
-						<td width="50%" align="right">Mã khách</td>
-						<td width="50%"><input type="text" name="makhach"
+						<td width="45%" align="right">Mã khách</td>
+						<td><input type="text" name="makhach" class="submit"
 							id="makhach" disabled="true" /></td>
 					</tr>
 
 					<tr>
 						<td width="50%" align="right">Chọn khách</td>
-						<td width="50%"><select name="smakhach" id="smakhach"
+						<td width="50%"><select name="smakhach" id="smakhach" class="submit"
 							disabled="true" onchange="SV()">
 								<option value="">---</option>
 								<c:forEach var="guest" items="${listGuest}">
@@ -149,7 +152,7 @@
 					</tr>
 
 					<tr>
-						<td colspan="2" align="center"><input type="submit"
+						<td colspan="2" align="center"><input type="submit" class="submit"
 							value="Xóa" /></td>
 					</tr>
 				</table>
@@ -192,6 +195,7 @@
 		</div>
 	</div>
 	<jsp:include page="components/footer.jsp" />
+
 
 </body>
 </html>

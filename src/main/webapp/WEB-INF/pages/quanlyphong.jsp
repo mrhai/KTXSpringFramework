@@ -22,24 +22,29 @@
 		<div id="title">Quản lý Phòng</div>
 		<jsp:include page="components/adminnav.jsp" />
 		<div id="content">
-			<table>
-				<tr>
-					<td><input type="radio" id="emptyroom" name="room"
-						checked="true" onclick="roomcase()">Phòng trống</input></td>
-					<td><input type="radio" id="addroom" name="room"
-						onclick="roomcase()">Thêm phòng</input></td>
-					<td><input type="radio" id="addregion" name="room"
-						onclick="roomcase()">Thêm khu nhà</input></td>
-					<!--                         xoa phong -->
-					<td><input type="radio" id="deleteroom" name="room"
-						onclick="roomcase()" hidden="true"></input></td>
-					<!--                         Xóa khu nhà -->
-					<td><input type="radio" id="deleteregion" name="room"
-						onclick="roomcase()" hidden="true"></input></td>
-					<td><input type="radio" id="changeemployee" name="room"
-						onclick="roomcase()">DS phong</input></td>
-				</tr>
-			</table>
+			<div id="tool">
+				<table>
+					<tr>
+						<td><input type="radio" id="emptyroom" name="room"
+							checked="true" onclick="roomcase()"><label for="emptyroom">Phòng trống</label></td>
+						<td><input type="radio" id="addroom" name="room"
+							onclick="roomcase()"><label for="addroom">Thêm phòng</label></td>
+						<td><input type="radio" id="addregion" name="room"
+							onclick="roomcase()"><label for="addregion">Thêm khu nhà</label></td>
+						<!--                         xoa phong -->
+						<td><input type="radio" id="deleteroom" name="room"
+							onclick="roomcase()" hidden="true"></input></td>
+						<!--                         Xóa khu nhà -->
+						<td><input type="radio" id="deleteregion" name="room"
+							onclick="roomcase()" hidden="true"></input></td>
+						<td><input type="radio" id="changeemployee" name="room"
+							onclick="roomcase()"><label for="changeemployee">DS phong</label></input></td>
+					</tr>
+				</table>
+			</div>
+			<center>
+				<font color="red"><p id="message">${message}</p></font>
+			</center>
 			<form action="#" method="post">
 				<table id="emptyroomtb" width="100%">
 					<tr>

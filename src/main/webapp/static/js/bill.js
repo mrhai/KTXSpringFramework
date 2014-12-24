@@ -1,4 +1,4 @@
-function bill(){
+function billCare(){
     if (document.getElementById("create").checked) {
         document.getElementById("createtb").hidden = false;
         document.getElementById("checkouttb").hidden = true;
@@ -17,7 +17,7 @@ function load(){
     }else if(id === "checkout"){
         document.getElementById("checkout").checked = true;
     }
-    bill();
+    billCare();
 }
 function createValidate(){
 	var sd = document["bill"]["sodien"].value;

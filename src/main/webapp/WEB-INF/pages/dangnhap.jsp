@@ -20,16 +20,17 @@
                     
                     <tr>
                         <td  width="45%" align="right">Tên đăng nhập</td>
-                        <td><input type="text" name="username" /></td>
-                        <td><label id="lblUsername"></label></td>
+                        <td><input type="text" name="username" class="submit" /><label id="lblUsername"></td>
+                        <td></label></td>
                     </tr>
                     <tr>
                         <td  width="45%" align="right">Mật khẩu</td>
-                        <td><input type="password" name="password" /></td>
-                        <td><label id="lblPassword"></label></td>
+                        <td><input type="password" name="password" class="submit" /><label id="lblPassword"></label></td>
+                        <td></td>
                     </tr>
                     <tr>
-                        <td colspan="3" align="center"><input type="submit" value="Đăng nhập"/></td>
+                    <td width="45%"></td>
+                        <td colspan="2" align="left"><input type="submit" value="Đăng nhập" class="submit"/></td>
                     </tr>
                     <tr>
                         <td colspan="3" align="center"> <font color="red">${message}</font></td>

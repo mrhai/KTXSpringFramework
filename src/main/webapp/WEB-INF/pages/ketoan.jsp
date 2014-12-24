@@ -24,35 +24,38 @@
 
 		<jsp:include page="components/adminnav.jsp" />
 		<div id="content">
-			<table>
-				<tr>
-					<td><input name="bill" type="radio" id="create"
-						onclick="bill()" checked="checked" /> Tạo hóa đơn</td>
-					<td><input name="bill" type="radio" id="checkout"
-						onclick="bill()" /> Xuất hóa đơn</td>
-					
+			<div id="tool">
+				<table>
+					<tr>
+						<td><input name="bill" type="radio" id="create"
+							onclick="billCare()" checked="checked" ><label for="create"> Tạo hóa đơn</label></td>
+						<td><input name="bill" type="radio" id="checkout"
+							onclick="billCare()" ><label for="checkout"> Xuất hóa đơn</label></td>
 
-				</tr>
-			</table>
-<center>
-				<font color="red"><p id = "message">${message }</p></font>
+
+					</tr>
+				</table>
+			</div>
+			<center>
+				<font color="red"><p id="message">${message }</p></font>
 			</center>
-			<form action="bill.html" method="post" name = "bill" onsubmit="return createValidate()">
+			<form action="bill.html" method="post" name="bill"
+				onsubmit="return createValidate()">
 				<table width="100%" hidden="true" id="createtb">
 					<tr>
 						<td colspan="2" align="center" class="titletable">Tạo hóa đơn</td>
 					</tr>
 					<tr>
-						<td width="50%" align="right">Mã phòng</td>
-						<td width="50%"><select name="roomnum">
+						<td width="45%" align="right">Mã phòng</td>
+						<td><select name="roomnum" class="submit">
 								<c:forEach var="list" items="${roomnum}">
 									<option value="${list}">${list}</option>
 								</c:forEach>
 						</select></td>
 					</tr>
 					<tr>
-						<td width="50%" align="right">Mã khu</td>
-						<td width="50%"><select name="roomregion">
+						<td align="right">Mã khu</td>
+						<td><select name="roomregion" class="submit">
 								<c:forEach var="list" items="${roomregion}">
 									<option value="${list.makhu}">${list.tenkhu}</option>
 								</c:forEach>
@@ -60,81 +63,81 @@
 					</tr>
 					<tr>
 						<td align="right">Số điện</td>
-						<td><input type="text" name="sodien" /></td>
+						<td><input type="text" name="sodien" class="submit"/></td>
 					</tr>
 					<tr>
 						<td align="right">Số nước</td>
-						<td><input type="text" name="sonuoc" /></td>
+						<td><input type="text" name="sonuoc" class="submit"/></td>
 					</tr>
 					<tr>
 						<td align="right">Tháng</td>
-						<td><input type="text" name="thang" value="${date }" /></td>
+						<td><input type="text" name="thang" value="${date }" class="submit"/></td>
 					</tr>
 					<tr>
-						<td colspan="2" align="center"><input type="submit"
+						<td colspan="2" align="center"><input type="submit" class="submit"
 							value="Tạo hóa đơn" /></td>
 					</tr>
 				</table>
 			</form>
 
 			<form>
-				<table width="100%" hidden="true" >
+				<table width="100%" hidden="true">
 					<tr>
 						<td colspan="2" align="center" class="titletable">Thay đổi
 							giá</td>
 					</tr>
 					<tr>
-						<td width="50%" align="right">Chọn loại</td>
-						<td width="50%"><select></select></td>
+						<td width="45%" align="right">Chọn loại</td>
+						<td><select></select></td>
 					</tr>
 					<tr>
 						<td align="right">Nhập giá</td>
 						<td><input type="text" name="sodien" /></td>
 					</tr>
 					<tr>
-						<td colspan="2" align="center"><input type="submit"
+						<td colspan="2" align="center"><input type="submit" class="submit"
 							value="Thay đổi" /></td>
 					</tr>
 				</table>
 			</form>
 
-			<form action="out.html" method="get" name = "out">
-				<table width="100%" hidden="true"  id="checkouttb">
+			<form action="out.html" method="get" name="out">
+				<table width="100%" hidden="true" id="checkouttb">
 					<tr>
 						<td colspan="2" align="center" class="titletable">Xuất hóa
 							đơn</td>
 					</tr>
 					<tr>
-						<td width="50%" align="right">Mã phòng</td>
-						<td width="50%"><select name="roomnum">
+						<td width="45%" align="right">Mã phòng</td>
+						<td><select name="roomnum" class="submit">
 								<c:forEach var="list" items="${roomnum}">
 									<option value="${list}">${list}</option>
 								</c:forEach>
 						</select></td>
 					</tr>
 					<tr>
-						<td width="50%" align="right">Mã khu</td>
-						<td width="50%"><select name="roomregion">
+						<td align="right">Mã khu</td>
+						<td><select name="roomregion" class="submit">
 								<c:forEach var="list" items="${roomregion}">
 									<option value="${list.makhu}">${list.tenkhu}</option>
 								</c:forEach>
 						</select></td>
 					</tr>
 					<tr>
-						<td width="50%" align="right">Hóa đơn tháng</td>
-						<td width="50%"><select name="thang">
+						<td align="right">Hóa đơn tháng</td>
+						<td><select name="thang" class="submit">
 								<c:forEach begin="1" end="12" var="i">
 									<option value="${i }">${i }</option>
 								</c:forEach>
 						</select></td>
 					</tr>
 					<tr>
-						<td colspan="2" align="center"><input type="submit"
+						<td colspan="2" align="center"><input type="submit" class="submit"
 							value="Xuất" /></td>
 					</tr>
 				</table>
 			</form>
-			
+
 		</div>
 	</div>
 	<jsp:include page="components/footer.jsp" />

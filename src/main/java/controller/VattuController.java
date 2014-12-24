@@ -30,12 +30,20 @@ public class VattuController {
 
 	@RequestMapping(value = "/vattu", method = RequestMethod.GET)
 	public String vattuManager(HttpServletRequest request) {
-		user = new GeneralUser();
+		User user = new GeneralUser();
 		if (user.checkSession(request.getSession())) {
-			request.setAttribute("listVT", new Device().getDevice());
-			request.setAttribute("roomnum", new Room().roomList());
-			request.setAttribute("roomregion", new RoomRegion().regionList());
-			return "quanlyvattu";
+			if (user.getActor(request.getSession(), "admin")) {
+				request.setAttribute("listVT", new Device().getDevice());
+				request.setAttribute("roomnum", new Room().roomList());
+				request.setAttribute("roomregion",
+						new RoomRegion().regionList());
+				return "quanlyvattu";
+			} else {
+				request.setAttribute("message",
+						"Bạn không có quyền truy cập vào mục vừa rồi!");
+				user.logout(request.getSession());
+				return "dangnhap";
+			}
 		} else {
 			return "dangnhap";
 		}
@@ -132,7 +140,7 @@ public class VattuController {
 			int maphong = Integer.parseInt(request.getParameter("maphong"));
 			int makhu = Integer.parseInt(request.getParameter("makhu"));
 			int mavt = Integer.parseInt(request.getParameter("mavt"));
-			
+
 			device = new Device();
 			device.setMaso(mavt);
 			region = new RoomRegion();
